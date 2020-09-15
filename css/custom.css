@@ -1,0 +1,237 @@
+.main-head {
+  height: 150px;
+  background: #fff;
+}
+
+.sidenav {
+  height: 100%;
+  background-color: #85c1e9;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.main {
+  padding: 0px 10px;
+}
+
+.form_add_emp {
+  background-color: white !important;
+  width: 80%;
+  padding: 80px;
+}
+
+.content_add_emp {
+  display: flex;
+  justify-content: center;
+}
+.form_title {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 5; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+.modal-content-seat {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 20% ;  /* Could be more or less, depending on screen size */
+  margin-top: 6%;
+  border-radius: 5px;
+}
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Could be more or less, depending on screen size */
+  margin-top: 6%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.box-seat {
+  padding: 15px;
+  background-color: white;
+  height: 75vh;
+  border-radius: 10px;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.4) ;
+}
+.box-seat-list {
+  height: 70%;
+  border-bottom: 2px solid #333;
+}
+.group-detail-index {
+  display: flex;
+  justify-content: space-between;
+}
+.group-btn-index {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 5px;
+}
+.box-seat-footer {
+  display: flex;
+  flex-direction: column;
+  height: 20%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.box-seat-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+  margin: 0px;
+  
+  padding-top: 15px;
+}
+.box-seat-item-image {
+  width: 80px;
+  height: 80px;
+}
+.select-box-seat {
+  background-color: #6161618f;
+  border-radius: 5px;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.4);
+}
+.status-red {
+  opacity: 0.5;
+}
+
+.box {
+  background-color: white;
+  padding: 15px !important;
+  border-radius: 10px !important;
+}
+
+.select-row-seat {
+  background-color: #AED6F1;
+}
+.select-row-ro {
+  background-color: #AED6F1;
+}
+.status_red {
+  margin-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background-color: red;
+  color: white;
+  opacity: 0.5;
+}
+.status_green {
+  margin-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: white;
+  background-color: green;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .login-form {
+    margin-top: 10%;
+  }
+  .title-logo {
+    font-size: 40px !important;
+  }
+  .register-form {
+    margin-top: 10%;
+  }
+  .form_add_emp {
+    width: 90%;
+    padding: 20px;
+  }
+  .form_title {
+    font-size: 18px;
+  }
+  
+  .modal {
+    margin-top: 30% !important;
+  }
+  .modal-content {
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .main {
+    margin-left: 40%;
+  }
+  .sidenav {
+    width: 40%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+  }
+
+  .login-form {
+    margin-top: 50%;
+    width: 90%;
+  }
+
+  .register-form {
+    margin-top: 20%;
+  }
+}
+
+.login-main-text {
+  margin-top: 20%;
+  padding: 60px;
+  color: #fff;
+}
+
+.login-main-text h2 {
+  font-weight: 300;
+}
+
+.btn-black {
+  background-color: #000 !important;
+  color: #fff;
+}
+
+.title-logo {
+  font-weight: bold;
+  margin: 0 !important;
+  font-size: 54px;
+  border-bottom: 5px solid #fff;
+}
+
+.form-control {
+  border-radius: 5px !important;
+}
