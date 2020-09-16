@@ -235,3 +235,9 @@
 .form-control {
   border-radius: 5px !important;
 }
+
+@media print {
+  #printableArea {
+    background-color: red;
+  }
+}

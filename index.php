@@ -37,34 +37,29 @@ $rountQuery = mysqli_query($con, $SQL);
 
 if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
     
-    $time_current = explode(":",date('H:i:s', time()));
-    $SQL = "SELECT * from  tb_round_out WHERE ro_id = '{$_GET["ro_id"]}'";
-
-    $ro_get_time_start = mysqli_fetch_all(mysqli_query($con, $SQL), MYSQLI_ASSOC);
+    $time_current = date('m/d/Y H:i:s', time());
+    // explode()
+    $SQL = "SELECT * FROM tb_book_seat WHERE bs_round_out = {$_GET["ro_id"]}";
+    $bookSeatQuery = mysqli_query($con, $SQL);
+    $bookSeatResult = mysqli_fetch_all($bookSeatQuery, MYSQLI_ASSOC);
     
-    if (isset($ro_get_time_start[0])){
-        $ro_get_time_start = $ro_get_time_start[0]["ro_time_start"];
-        $ro_get_time_start = explode(":", $ro_get_time_start);
-    }else {
-        $ro_get_time_start = false;
+    $get_time_current_round = false;
+    if(isset($bookSeatResult[0])){
+        $get_time_current_round = $bookSeatResult[0]["bs_time"]; 
     }
     
-    $check_time_seat = false;
+    if ($get_time_current_round != false) {
+        $timestamp_round = strtotime($get_time_current_round) - 18000;
+        $timestamp_current = strtotime($time_current);
 
-    if ((int)$time_current[0] > (int)$ro_get_time_start[0]) {
-        $check_time_seat = true;
-    } else if((int)$time_current[0] == (int)$ro_get_time_start[0]) {
-        if((int)$time_current[1] > (int)$ro_get_time_start[1]){
-            $check_time_seat = true;
+        if ($timestamp_current > $timestamp_round) {
+            $SQL = "DELETE FROM tb_book_seat WHERE bs_round_out = {$_GET["ro_id"]}";
+            mysqli_query($con, $SQL);
         }
-    }
-    
-    if ($check_time_seat) {
-        $SQL = "UPDATE tb_seat SET seat_status = 0 WHERE seat_bus = {$_GET["bus_id"]} ";
-        mysqli_query($con, $SQL);
     }
 
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -81,10 +76,19 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
-
 </head>
 
 <body class="skin-blue">
+
+
+    <input type="hidden" id="txt_ro_id" value="<?= $_GET['ro_id'] ?>">
+    <input type="hidden" id="txt_user_id" value="<?= $_GET['user_id'] ?>">
+    <input type="hidden" id="txt_select_seat" value="<?= $_GET['select_seat'] ?>">
+    <input type="hidden" id="txt_price" value="<?= $_GET['price'] ?>">
+
+    <div id="printableArea" style="display: none;">
+        <h1>Print me</h1>
+    </div>
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.php" class="logo">
@@ -248,7 +252,7 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
                                         $i = 1; 
                                         while($row = mysqli_fetch_assoc($rountQuery)): 
                                     ?>
-                                    <tr  class="<?= $_GET['bus_id'] == $row['b_id'] ? 'select-row-seat' : null ?>">
+                                    <tr  class="<?= $_GET['ro_id'] == $row['ro_id'] ? 'select-row-seat' : null ?>">
                                         <th scope="row"><?= $i ?></th>
                                         <td><?= $row["ps_name"] ?></td>
                                         <td><?= $row["ro_time_start"] ?></td>
@@ -291,29 +295,40 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
                                             $SQL = "SELECT * FROM tb_seat WHERE seat_bus = {$bus_id} ";
                                             $seatQuery = mysqli_query($con, $SQL);
 
+                                            $pach_search = isset($_GET["btn_search"])? "&search_start={$_GET['search_start']}&search_end={$_GET['search_end']}&btn_search=":null;
 
+                                            $SQL = "SELECT * FROM tb_book_seat WHERE bs_round_out = {$_GET['ro_id']}";
+                                            $bookSeatQuery = mysqli_query($con, $SQL);
+                                            $bookSeatResult = mysqli_fetch_all($bookSeatQuery, MYSQLI_ASSOC);
 
+                                            
                                             while($row = mysqli_fetch_assoc($seatQuery)):
+                                                
+                                                $book_seat_status = false;
+
+                                                foreach ($bookSeatResult as $key => $value) {
+                                                    if ($value["bs_book_seat"] == $row["seat_id"]){
+                                                        $book_seat_status = true;
+                                                    }
+                                                }
+
+                                                if($book_seat_status){
                                     ?>
                                             
-                                            <?php if($row["seat_status"] == 1) {?>
                                                 
                                                 <div class="col-md-3 col-sm-6 box-seat-item">
                                                     <img src="svg/seat.svg" class="box-seat-item-image status-red">
                                                     <p class="status_red"><?= $row["seat_name"] ?></p>
                                                 </div>
-                                            <?php 
-                                                } else {
-                                                    $pach_search = isset($_GET["btn_search"])? "&search_start={$_GET['search_start']}&search_end={$_GET['search_end']}&btn_search=":null   
-                                            ?>
+                                                <?php } else {?>
                                                 <a href="<?= "?ro_id=".$_GET["ro_id"]."&bus_id=".$_GET["bus_id"]."&select_seat=".$row["seat_id"]."&price=".$_GET["price"].$pach_search ?>">
                                                     <div class="col-md-3 col-sm-6 box-seat-item <?= $select_seat == $row["seat_id"]? 'select-box-seat':null ?>">
                                                         <img src="svg/seat.svg" class="box-seat-item-image">
                                                         <p class="status_green""><?= $row["seat_name"] ?></p>
                                                     </div>
-                                            </a>
-                                            <?php }?>
+                                                </a>
                                     <?php 
+                                                }
                                             endwhile;
                                         }else {
                                     ?>
@@ -324,7 +339,7 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
                                         }
                                     ?>
 
-                                </?>
+                                </div >
                             </div>
                         </div>
 
@@ -334,7 +349,15 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
                                 <h3><?= isset($_GET["price"])? $_GET["price"]:0 ?> ฿</h3>
                             </div>
                             <div class="group-btn-index">
-                                <button class="btn btn-success" style="margin-right: 5px;">ขายตั๋ว</button>
+                                <?php 
+                                    $btn_sale = false;
+                                    if (isset($_GET['ro_id']) && isset($_GET['bus_id']) && isset($_GET['select_seat']) && isset($_GET['price'])) {
+                                        $btn_sale = true;
+                                    }
+                                ?>
+                                <button onclick="printDiv('printableArea')" class="btn btn-success" style="margin-right: 5px;" <?= !$btn_sale? "disabled":null?> >
+                                    ขายตั๋ว
+                                </button>
                                 <button class="btn btn-danger">ยกเลิก</button>
                             </div>
                         </div>
@@ -346,12 +369,9 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
         </aside><!-- /.right-side -->
     </div><!-- ./wrapper -->
 
-
-
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/AdminLTE/app2.js" type="text/javascript"></script>
-    <script src="js/index.js" type="text/javascript"></script>
 
 </body>
 

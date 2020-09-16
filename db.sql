@@ -43,7 +43,6 @@ CREATE TABLE `tb_seat` (
     `seat_id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `seat_name` varchar(10) NOT NULL,
     `seat_bus` int NOT NULL,
-    `seat_status` varchar(1) DEFAULT '0',
     FOREIGN KEY (seat_bus) REFERENCES tb_bus(b_id) ON UPDATE CASCADE ON DELETE CASCADE
 )
 
@@ -53,7 +52,16 @@ CREATE TABLE `tb_sales` (
     `sale_emp` int NOT NULL,
     `sale_seat` int not null,
     `sale_price` int not null DEFAULT 0,
+    `sale_time_sale` DATETIME NOT NULL DEFAULT NOW(),
     FOREIGN KEY (sale_emp) REFERENCES tb_user(u_id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (sale_round) REFERENCES tb_round_out(ro_id) ON UPDATE CASCADE ON DELETE CASCADE
 )
 
+CREATE TABLE `tb_book_seat` (
+    `bs_id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    `bs_round_out` int NOT NULL,
+    `bs_time` DATETIME NOT NULL,
+    `bs_book_seat` int NOT NULL,
+    FOREIGN KEY (bs_round_out) REFERENCES tb_round_out(ro_id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (bs_book_seat) REFERENCES tb_seat(seat_id) ON UPDATE CASCADE ON DELETE CASCADE
+)

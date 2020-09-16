@@ -32,13 +32,6 @@ $objQuery = mysqli_query($con, $SQL);
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- font Awesome -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Ionicons -->
-    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <!-- Daterange picker -->
-    <link href="css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
-    <!-- Theme style -->
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
@@ -173,18 +166,18 @@ $objQuery = mysqli_query($con, $SQL);
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">ชั่วโมง</p>
-                                        <select class="form-control" name="time_start_h">
+                                        <select class="form-control" name="time_start_h" id="time_start_h" onchange="changeTime()">
                                             <?php for ($i = 0; $i <= 9; $i++) : ?>
                                                 <option value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
                                             <?php endfor; ?>
-                                            <?php for ($i = 10; $i <= 24; $i++) : ?>
+                                            <?php for ($i = 10; $i < 24; $i++) : ?>
                                                 <option value="<?= $i ?>"><?= $i ?></option>
                                             <?php endfor; ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">นาที</p>
-                                        <select class="form-control" name="time_start_m">
+                                        <select class="form-control" name="time_start_m" id="time_start_m" onchange="changeTime()">
                                             <?php for ($i = 0; $i <= 9; $i++) : ?>
                                                 <option value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
                                             <?php endfor; ?>
@@ -200,18 +193,18 @@ $objQuery = mysqli_query($con, $SQL);
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">ชั่วโมง</p>
-                                        <select class="form-control" name="time_end_h">
+                                        <select class="form-control" name="time_end_h" id="time_end_h" onchange="changeTime()">
                                             <?php for ($i = 0; $i <= 9; $i++) : ?>
                                                 <option value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
                                             <?php endfor; ?>
-                                            <?php for ($i = 10; $i <= 24; $i++) : ?>
+                                            <?php for ($i = 10; $i < 24; $i++) : ?>
                                                 <option value="<?= $i ?>"><?= $i ?></option>
                                             <?php endfor; ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">นาที</p>
-                                        <select class="form-control" name="time_end_m">
+                                        <select class="form-control" name="time_end_m" id="time_end_m" onchange="changeTime()">
                                             <?php for ($i = 0; $i <= 9; $i++) : ?>
                                                 <option value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
                                             <?php endfor; ?>
@@ -226,7 +219,7 @@ $objQuery = mysqli_query($con, $SQL);
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-12">
                                 <h4>Bus</h4>
-                                <select class="form-control" name="bus">
+                                <select class="form-control" name="bus" id="bus">
                                     <?php while ($row = mysqli_fetch_assoc($busQuery)) : ?>
                                         <option value="<?= $row["b_id"] ?>"><?= $row["b_name"] ?></option>
                                     <?php endwhile; ?>
@@ -444,13 +437,11 @@ $objQuery = mysqli_query($con, $SQL);
     <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- Bootstrap WYSIHTML5 -->
-    <script src="js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
-    <!-- iCheck -->
-    <script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+
     <!-- AdminLTE App -->
     <script src="js/AdminLTE/app2.js" type="text/javascript"></script>
     <script src="js/index.js" type="text/javascript"></script>
+    <script src="js/round_out2.js" type="text/javascript"></script>
 </body>
 
 </html>
