@@ -59,8 +59,8 @@ $objQuery = mysqli_query($con, $SQL);
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
                             <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?></span>
+                            <i class="fas fa-angle-down" style="font-size: 14px;margin-left: 5px;"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -74,10 +74,10 @@ $objQuery = mysqli_query($con, $SQL);
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">โปรไฟล์</a>
+                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="logout.php" class="btn btn-default btn-flat">ออกจากระบบ</a>
+                                    <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
                                 </div>
                             </li>
                         </ul>
@@ -381,7 +381,7 @@ $objQuery = mysqli_query($con, $SQL);
                     </button>
                 </div>
                 <table class="table table-striped text-center" style="margin-top: 15px;">
-                    <thead class="thead-dark">
+                    <thead class="thead-dark" style="background-color: #5DADE2;color:white">
                         <tr>
                             <th scope="col">
                                 <i class="fas fa-sort-numeric-down"></i> No.

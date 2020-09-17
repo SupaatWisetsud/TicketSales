@@ -50,10 +50,10 @@ CREATE TABLE `tb_sales` (
     `sale_id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `sale_round` int NOT NULL,
     `sale_emp` int NOT NULL,
+    `sale_emp_name` varchar(80) NOT NULL,
     `sale_seat` int not null,
     `sale_price` int not null DEFAULT 0,
     `sale_time_sale` DATETIME NOT NULL DEFAULT NOW(),
-    FOREIGN KEY (sale_emp) REFERENCES tb_user(u_id) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (sale_round) REFERENCES tb_round_out(ro_id) ON UPDATE CASCADE ON DELETE CASCADE
 )
 

@@ -100,8 +100,8 @@ $listSaleQuery = mysqli_query($con, $SQL);
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
                             <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?></span>
+                            <i class="fas fa-angle-down" style="font-size: 14px;margin-left: 5px;"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -115,10 +115,10 @@ $listSaleQuery = mysqli_query($con, $SQL);
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">โปรไฟล์</a>
+                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="logout.php" class="btn btn-default btn-flat">ออกจากระบบ</a>
+                                    <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
                                 </div>
                             </li>
                         </ul>
@@ -206,6 +206,11 @@ $listSaleQuery = mysqli_query($con, $SQL);
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-4 text-right">
+                        <button class="btn btn-warning">
+                            <i class="fas fa-print"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="row">
@@ -220,7 +225,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
                             <div class="box-table-chart">
                                 <div style="overflow-y: auto;">
                                     <table class="table table-striped text-center">
-                                        <thead>
+                                        <thead style="background-color: #58D68D;">
                                             <tr>
                                                 <th>No.</th>
                                                 <th>รอบออก</th>
@@ -267,7 +272,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
                         <div class="box-table-chart">
                             <div style="overflow-y: auto;">
                                 <table class="table table-striped text-center">
-                                    <thead>
+                                    <thead style="background-color: #5DADE2; color:white">
                                         <tr>
                                             <th>No.</th>
                                             <th>รอบออก</th>

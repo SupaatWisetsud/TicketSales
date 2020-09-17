@@ -33,7 +33,7 @@
 
     <li class="<?= strpos($url, "start_end")? 'active':null?>">
         <a href="start_end.php">
-        <i class="fas fa-car" style="font-size: 14px;"></i>
+            <i class="fas fa-car" style="font-size: 14px;"></i>
             <span> ต้นทาง / ปลายทาง</span>
         </a>
     </li>
@@ -57,25 +57,28 @@
     <!-- emp -->
     <li class="<?= $currentIndex? 'active':null ?>">
         <a href="index.php">
+            <i class="fas fa-tachometer-alt" style="font-size: 14px;"></i>
             <span>หน้าหลัก</span>
         </a>
     </li>
 
     <li class="<?= strpos($url, "round_out")? 'active':null?>">
         <a href="round_out.php">
+            <i class="fas fa-table" style="font-size: 14px;"></i>
             <span>ตารางรอบรถ</span>
         </a>
     </li>
     
     <li class="<?= strpos($url, "start_end")? 'active':null?>">
         <a href="start_end.php">
-        <i class="fas fa-car" style="font-size: 14px;"></i>
+            <i class="fas fa-car" style="font-size: 14px;"></i>
             <span> ต้นทาง / ปลายทาง</span>
         </a>
     </li>
 
     <li class="<?= strpos($url, "seat")? 'active':null?>">
         <a href="seat.php">
+            <i class="fas fa-chair" style="font-size: 14px;"></i>
             <span>ที่นั้ง</span>
         </a>
     </li>

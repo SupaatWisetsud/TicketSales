@@ -71,10 +71,10 @@ $objUserAll = mysqli_query($con, $SQL);
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">โปรไฟล์</a>
+                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="logout.php" class="btn btn-default btn-flat">ออกจากระบบ</a>
+                                    <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
                                 </div>
                             </li>
                         </ul>
@@ -136,7 +136,7 @@ $objUserAll = mysqli_query($con, $SQL);
                 </div>
                 <div class="container">
                     <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
-                        <thead class="thead-dark">
+                        <thead class="thead-dark" style="background-color: #5DADE2;color:white">
                             <tr>
                                 <th scope="col">
                                     <i class="fas fa-sort-numeric-down"></i>
@@ -166,7 +166,7 @@ $objUserAll = mysqli_query($con, $SQL);
                                     <th scope="row"><?= $row["u_id"]?></th>
                                     <td><?= $row["u_email"]?></td>
                                     <td><?= $row["u_first_name"] ." ". $row["u_last_name"] ?></td>
-                                    <td><?= $row["u_role"] == 0? "ลูกจ้าง":"ผู้ดูแล" ?></td>
+                                    <td><?= $row["u_role"] == 0? "<p class='label label-warning'>ลูกจ้าง</p>":"<p class='label label-success'>ผู้ดูแล</p>" ?></td>
                                     <td><?= $row["u_tel"]?></td>
                                     <td>
                                         <a href="action/action_delete_emp.php?id=<?= $row["u_id"] ?>">

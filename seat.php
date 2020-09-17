@@ -55,6 +55,7 @@ $busQuery = mysqli_query($con, $SQL);
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?></span>
+                            <i class="fas fa-angle-down" style="font-size: 14px;margin-left: 5px;"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -68,10 +69,10 @@ $busQuery = mysqli_query($con, $SQL);
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">โปรไฟล์</a>
+                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="logout.php" class="btn btn-default btn-flat">ออกจากระบบ</a>
+                                    <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
                                 </div>
                             </li>
                         </ul>
@@ -175,7 +176,7 @@ $busQuery = mysqli_query($con, $SQL);
                                 <button id="btn-add-car" class="btn btn-success"> <i class="fas fa-plus"></i> เพิ่มรถโดยสาร</button>
                             </div>
                             <table class="table text-center" style="margin-top: 15px;">
-                                <thead>
+                                <thead style="background-color: #5DADE2; color: white">
                                     <tr>
                                         <th scope="col"> <i class="fas fa-sort-numeric-down"></i> #</th>
                                         <th scope="col"><i class="fab fa-ideal"></i> ไอดี</th>
@@ -219,8 +220,8 @@ $busQuery = mysqli_query($con, $SQL);
                             <div style="position: absolute;top: 10px;right: 10px;">
                                 <button id="myBtn" class="btn btn-success" <?= !isset($_GET["bus_id"]) ? "disabled" : null ?>><i class="fas fa-plus"></i> เพิ่มที่นั้ง</button>
                             </div>
-                            <table class="table text-center" style="margin-top: 15px;">
-                                <thead>
+                            <table class="table table-striped text-center text-center" style="margin-top: 15px;">
+                                <thead  style="background-color: #5DADE2; color: white">
                                     <tr>
                                         <th scope="col"> <i class="fas fa-sort-numeric-down"></i> #</th>
                                         <th scope="col"><i class="fab fa-ideal"></i> ไอดี</th>

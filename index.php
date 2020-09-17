@@ -55,6 +55,9 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
     }
 }
 
+$SQL = "SELECT COUNT(*) as bs_count_round, bs_round_out FROM `tb_book_seat` GROUP BY bs_round_out";
+$count_round = mysqli_query($con, $SQL);
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -120,10 +123,10 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">โปรไฟล์</a>
+                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="logout.php" class="btn btn-default btn-flat">ออกจากระบบ</a>
+                                    <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
                                 </div>
                             </li>
                         </ul>
@@ -230,8 +233,8 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
                 <div class="row">
                     <div class="col-md-6">
                         <div style="overflow-x: auto; margin-top: 15px;">
-                            <table class="table table-dark" >
-                                <thead>
+                            <table class="table text-center" >
+                                <thead style="background-color: #5DADE2; color: white;">
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">ต้นทาง</th>
@@ -247,6 +250,17 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
                                     <?php
                                     $i = 1;
                                     while ($row = mysqli_fetch_assoc($rountQuery)) :
+                                        $SQL = "SELECT COUNT(*) FROM tb_seat WHERE seat_bus = {$row['b_id']}";
+                                        $count_seat_in_bus = mysqli_fetch_row(mysqli_query($con, $SQL))[0];
+                                        
+                                        $check_full_seat = false;
+                                        while($check_seat = mysqli_fetch_assoc($count_round)){
+                                            if(
+                                                $check_seat["bs_round_out"] == $row["ro_id"] 
+                                                && $check_seat["bs_count_round"] == $count_seat_in_bus){
+                                                $check_full_seat = true;
+                                            }
+                                        }
                                     ?>
                                         <tr class="<?= $_GET['ro_id'] == $row['ro_id'] ? 'select-row-seat' : null ?>">
                                             <th scope="row"><?= $i ?></th>
@@ -256,7 +270,7 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
                                             <td><?= $row["ro_time_end"] ?></td>
                                             <td><?= $row["b_name"] ?></td>
                                             <td><?= $row["ro_price"] ?></td>
-                                            <td><p class="label label-success"><?= "ว่าง" ?></p></td>
+                                            <td><p class="label <?= $check_full_seat? 'label-danger':'label-success'?>"><?= $check_full_seat? 'เต็ม!':'ว่าง' ?></p></td>
                                             <td>
                                                 <?php
                                                 $pach_search = isset($_GET["btn_search"]) ? "&search_start={$_GET['search_start']}&search_end={$_GET['search_end']}&btn_search=" : null

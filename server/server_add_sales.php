@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     require "../connect.php";
 
     if(isset($_POST["pass"])) {
@@ -8,12 +9,17 @@
             $id_seat = $_POST["id_seat"];
             $price = $_POST["price"];
 
+            $SQL = "SELECT * FROM tb_user WHERE u_id = {$id_emp}";
+            $userQuery = mysqli_query($con, $SQL);
+            $userResult = mysqli_fetch_assoc($userQuery);
+            $emp_name = $userResult["u_first_name"]. " " .$userResult["u_last_name"];
+
             $time_stamp = time() + 18000;
 
             $time = date('Y/m/d H:i:s', time() + 18000);
             
-            $SQL = "INSERT INTO tb_sales (sale_round, sale_emp, sale_seat, sale_price, sale_time_sale) 
-                    VALUE ('{$id_round}', '{$id_emp}', '{$id_seat}, '{$price}', '{$time}')";
+            $SQL = "INSERT INTO tb_sales (sale_round, sale_emp, sale_seat, sale_price, sale_time_sale, sale_emp_name) 
+                    VALUE ('{$id_round}', '{$id_emp}', '{$id_seat}, '{$price}', '{$time}', '{$emp_name}')";
             if(mysqli_query($con, $SQL)) {
                 
                 $SQL = "SELECT * FROM tb_round_out WHERE ro_id = {$id_round}";

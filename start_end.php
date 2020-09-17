@@ -3,7 +3,6 @@ session_start();
 require "connect.php";
 
 if (!isset($_SESSION["user_id"])) header("location:login.php");
-if ($_SESSION["user_role"] != 1) header("location:login.php");
 
 $id = $_SESSION["user_id"];
 $role = $_SESSION["user_role"];
@@ -15,9 +14,11 @@ if (!mysqli_num_rows($objQuery)) header("location:login.php");
 
 $user = mysqli_fetch_assoc($objQuery);
 
-$SQL = "SELECT * FROM tb_user WHERE u_id != '{$id}'";
+$SQL = "SELECT * FROM tb_place_start";
+$psQuery = mysqli_query($con, $SQL);
 
-$objUserAll = mysqli_query($con, $SQL);
+$SQL = "SELECT * FROM tb_place_end";
+$peQuery = mysqli_query($con, $SQL);
 
 ?>
 <!DOCTYPE html>
@@ -71,10 +72,10 @@ $objUserAll = mysqli_query($con, $SQL);
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">โปรไฟล์</a>
+                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="logout.php" class="btn btn-default btn-flat">ออกจากระบบ</a>
+                                    <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
                                 </div>
                             </li>
                         </ul>
@@ -123,7 +124,145 @@ $objUserAll = mysqli_query($con, $SQL);
 
             <!-- Main content -->
             <section class="content">
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box" style="padding: 10px;">
+
+                            <!-- header -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h4 style="font-weight: bold;"><i class="fas fa-train"></i> ต้นทาง</h4>
+                                </div>
+                                <div class="col-md-8">
+                                    <form action="action/action_add_ps.php" method="POST">
+                                        <div class="row">
+                                            <div class="col-md-6" style="padding: 0px;">
+                                                <input type="text" name="name" class="form-control" placeholder="กรุณาใส่ชื่อสถานที่">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-success" name="btn_add_ps" style="width: 100%;"><i class="fas fa-plus"></i> เพิ่ม</button>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a class="btn btn-primary" href="#" style="width: 100%;"><i class="fas fa-search" style="font-size: 14px;"></i> ค้นหา</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
+                                        <thead class="thead-dark" style="background-color: #5DADE2;color:white">
+                                            <tr>
+                                                <th scope="col">
+                                                    <i class="fas fa-sort-numeric-down"></i>
+                                                    No.
+                                                </th>
+                                                <th scope="col">
+                                                    <i class="fas fa-signature"></i>
+                                                    ชื่อสถานที่
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                $i = 1;
+                                                while($row = mysqli_fetch_assoc($psQuery)): 
+                                            ?>
+                                                <tr>
+                                                    <td><?= $i ?></td>
+                                                    <td><?= $row["ps_name"] ?></td>
+                                                    <td>
+                                                        <a href="action/action_delete_ps.php?id=<?= $row["ps_id"] ?>">
+                                                            <button class="btn btn-danger">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php
+                                                $i++; 
+                                                endwhile; 
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="box" style="padding: 10px;">
             
+                            <!-- header -->
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h4 style="font-weight: bold;"><i class="fas fa-tram"></i> ปลายทาง</h4>
+                                </div>
+                                <div class="col-md-8">
+                                    <form action="action/action_add_pe.php" method="POST">
+                                        <div class="row">
+                                            <div class="col-md-6" style="padding: 0px;">
+                                                <input type="text" name="name" class="form-control" placeholder="กรุณาใส่ชื่อสถานที่">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-success" name="btn_add_pe" style="width: 100%;"><i class="fas fa-plus"></i> เพิ่ม</button>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <a class="btn btn-primary" href="#" style="width: 100%;"><i class="fas fa-search" style="font-size: 14px;"></i> ค้นหา</a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
+                                        <thead class="thead-dark" style="background-color: #F7DC6F;color:white">
+                                            <tr>
+                                                <th scope="col">
+                                                    <i class="fas fa-sort-numeric-down"></i>
+                                                    No.
+                                                </th>
+                                                <th scope="col">
+                                                    <i class="fas fa-signature"></i>
+                                                    ชื่อสถานที่
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                $i = 1;
+                                                while($row = mysqli_fetch_assoc($peQuery)): 
+                                            ?>
+                                                <tr>
+                                                    <td><?= $i ?></td>
+                                                    <td><?= $row["pe_name"] ?></td>
+                                                    <td>
+                                                        <a href="action/action_delete_pe.php?id=<?= $row["pe_id"] ?>">
+                                                            <button class="btn btn-danger">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php
+                                                $i++; 
+                                                endwhile; 
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
             </section><!-- /.content -->
         </aside><!-- /.right-side -->
     </div><!-- ./wrapper -->
