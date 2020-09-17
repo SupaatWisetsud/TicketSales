@@ -27,8 +27,7 @@ $busQuery = mysqli_query($con, $SQL);
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- font Awesome -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
+    <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
     <!-- Theme style -->
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link href="css/custom.css" rel="stylesheet" type="text/css" />
@@ -39,7 +38,7 @@ $busQuery = mysqli_query($con, $SQL);
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.php" class="logo">
-            Ticket Sales
+            <img src="svg/parking_ticket.svg" width="35px" height="35px"/>Ticket Sales
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -55,8 +54,7 @@ $busQuery = mysqli_query($con, $SQL);
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-user"></i>
-                            <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?> <i class="caret"></i></span>
+                            <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -95,7 +93,7 @@ $busQuery = mysqli_query($con, $SQL);
                     <div class="pull-left info">
                         <p>คุณ <?= $user["u_first_name"] . " " . $user["u_last_name"] ?> </p>
                         <div>
-                            <i class="fa fa-circle text-success"></i>
+                            <i class="fas fa-circle" style="font-size: 12px;color:#58D68D"></i>
                             <?= $role == 1 ? "ผู้ดูแล" : "พนักงาน" ?>
                         </div>
                     </div>
@@ -114,21 +112,15 @@ $busQuery = mysqli_query($con, $SQL);
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Dashboard
+                    <i class="fas fa-shuttle-van"></i> รถ / ที่นั้ง
                     <small>Control panel</small>
                 </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="active">Dashboard</li>
-                </ol>
             </section>
 
             <!-- Main content -->
             <section class="content" style="min-height: 500px;">
 
-                <div id="myModal" class="modal container">
-
-          
+                <div id="myModal" class="modal">
                     <div class="modal-content-seat">
                         <a href="?bus_id=<?=$_GET['bus_id']?>"><span class="close">&times;</span></a>
                         <div class="text-center">
@@ -143,7 +135,29 @@ $busQuery = mysqli_query($con, $SQL);
                             </div>
                             <div class="row">
                                 <div class="col-md-12 text-right" style="margin-top: 15px;">
-                                    <button type="submit" name="btn_add_seat" class="btn btn-success">เพิ่ม</button>
+                                    <button type="submit" name="btn_add_seat" class="btn btn-success"> <i class="fas fa-plus"></i> เพิ่ม</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div id="myModalcar" class="modal">
+                    <div class="modal-content-seat">
+                        <span class="close">&times;</span>
+                        <div class="text-center">
+                            <h3> เพิ่มรถโดยสาร</h3>
+                        </div>
+                        <form action="action/action_add_car.php" method="POST">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="text" name="name_car" class="form-control" placeholder="กรุณาใส่ชื่อหรือประเภทของรถ" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-right" style="margin-top: 15px;">
+                                    <button type="submit" name="btn_add_car" class="btn btn-success"><i class="fas fa-plus"></i> เพิ่ม</button>
                                 </div>
                             </div>
                         </form>
@@ -154,16 +168,18 @@ $busQuery = mysqli_query($con, $SQL);
                 <div class="row">
                     <div class="col-md-4">
                         <div class="box">
-                            <div style="text-align: center;">
-                                <h3>Bus</h3>
+                            <div style="text-align: center; position: relative;">
+                                <h3 ><i class="fas fa-shuttle-van"></i> รถโดยสาร</h3>
                             </div>
-                            <table class="table text-center">
+                            <div style="position: absolute;top: 5px;right: 5px;">
+                                <button id="btn-add-car" class="btn btn-success"> <i class="fas fa-plus"></i> เพิ่มรถโดยสาร</button>
+                            </div>
+                            <table class="table text-center" style="margin-top: 15px;">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Select</th>
+                                        <th scope="col"> <i class="fas fa-sort-numeric-down"></i> #</th>
+                                        <th scope="col"><i class="fab fa-ideal"></i> ไอดี</th>
+                                        <th scope="col"><i class="fas fa-calendar-week"></i> ชื่อ/ประเภท</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -177,7 +193,12 @@ $busQuery = mysqli_query($con, $SQL);
                                             <td><?= $row["b_name"] ?></td>
                                             <td>
                                                 <a href="?bus_id=<?= $row["b_id"] ?>">
-                                                    <button class="btn btn-success">Select</button>
+                                                    <button class="btn btn-primary"><i class="fas fa-check-circle"></i></button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="action/action_delete_car.php?bus_id=<?= $row["b_id"] ?>">
+                                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                                 </a>
                                             </td>
                                         </tr>
@@ -193,19 +214,17 @@ $busQuery = mysqli_query($con, $SQL);
 
                         <div class="box">
                             <div style="text-align: center; position: relative;">
-                                <h3>Seat</h3>
+                                <h3><i class="fas fa-chair"></i> ที่นั้ง</h3>
                             </div>
                             <div style="position: absolute;top: 10px;right: 10px;">
-                                <button id="myBtn" class="btn btn-primary" <?= !isset($_GET["bus_id"]) ? "disabled" : null ?>>เพิ่มที่นั้ง</button>
+                                <button id="myBtn" class="btn btn-success" <?= !isset($_GET["bus_id"]) ? "disabled" : null ?>><i class="fas fa-plus"></i> เพิ่มที่นั้ง</button>
                             </div>
-                            <table class="table text-center">
+                            <table class="table text-center" style="margin-top: 15px;">
                                 <thead>
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Edit</th>
-                                        <th scope="col">Delete</th>
+                                        <th scope="col"> <i class="fas fa-sort-numeric-down"></i> #</th>
+                                        <th scope="col"><i class="fab fa-ideal"></i> ไอดี</th>
+                                        <th scope="col"><i class="fas fa-calendar-week"></i> ชื่อที่นั้ง</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -236,12 +255,12 @@ $busQuery = mysqli_query($con, $SQL);
                                                         <input type="text" class="form-control" name="seat_name" value="<?= $row['seat_name'] ?>">
                                                     </td>
                                                     <td>
-                                                        <button type="submit" name="btn_update_seat" class="btn btn-primary">Update</button>
+                                                        <button type="submit" name="btn_update_seat" class="btn btn-primary"><i class="fas fa-pen-alt"></i></button>
                                                     </td>
                                                 </form>
                                                     <td>
                                                         <a href="?bus_id=<?= $bus_id ?>">
-                                                            <button class="btn btn-danger">Cancel</button>
+                                                            <button class="btn btn-danger"><i class="fas fa-slash"></i></button>
                                                         </a>
                                                     </td>
                                             </tr>
@@ -256,12 +275,12 @@ $busQuery = mysqli_query($con, $SQL);
                                                 <td><?= $row["seat_name"] ?></td>
                                                 <td>
                                                     <a href="?edit=1&bus_id=<?= $_GET['bus_id'] ?>&seat_id=<?= $row['seat_id'] ?>">
-                                                        <button class="btn btn-warning">Edit</button>
+                                                        <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
                                                     </a>
                                                 </td>
                                                 <td>
                                                     <a href="action/action_delete_seat.php?id=<?= $row['seat_id'] ?>&bus=<?= $bus_id ?>">
-                                                        <button class="btn btn-danger">Delete</button>
+                                                        <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                                     </a>
                                                 </td>
                                             </tr>
@@ -286,16 +305,10 @@ $busQuery = mysqli_query($con, $SQL);
     <!-- add new calendar event modal -->
 
 
-    <!-- jQuery 2.0.2 -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <!-- jQuery UI 1.10.3 -->
-    <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-    <!-- Bootstrap -->
+    <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
-
-    <!-- AdminLTE App -->
     <script src="js/AdminLTE/app2.js" type="text/javascript"></script>
-    <script src="js/index.js" type="text/javascript"></script>
+    <script src="js/seat.js" type="text/javascript"></script>
 </body>
 
 </html>

@@ -50,7 +50,7 @@
   padding: 20px;
   border: 1px solid #888;
   width: 20% ;  /* Could be more or less, depending on screen size */
-  margin-top: 6%;
+  margin-top: 16%;
   border-radius: 5px;
 }
 /* Modal Content/Box */
@@ -59,7 +59,7 @@
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 60%; /* Could be more or less, depending on screen size */
+  width: 40%; /* Could be more or less, depending on screen size */
   margin-top: 6%;
 }
 
@@ -86,8 +86,9 @@
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.4) ;
 }
 .box-seat-list {
-  height: 70%;
-  border-bottom: 2px solid #333;
+  height: 80%;
+  border: 2px solid #333;
+  border-radius: 5px;
 }
 .group-detail-index {
   display: flex;
@@ -117,11 +118,11 @@
   padding-top: 15px;
 }
 .box-seat-item-image {
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
 }
 .select-box-seat {
-  background-color: #6161618f;
+  background-color: #9b9b9b8f;
   border-radius: 5px;
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.4);
 }
@@ -156,6 +157,38 @@
   color: white;
   background-color: green;
 }
+.chart {
+  padding: 5px;
+  margin-top: 25px;
+  margin-bottom: 5px;
+}
+.box-chart {
+  background-color: #6799da;
+  padding: 15px;
+  min-height: 100px;
+  border-radius: 5px;
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.4);
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: #ffffff;
+}
+
+
+@media screen and (max-width: 1088px) {
+
+  .modal-content, .modal-content-seat {
+    width: 40% !important; /* Could be more or less, depending on screen size */
+    margin-top: 30% !important;
+  }
+}
+@media screen and (max-width: 988px) {
+
+  .modal-content, .modal-content-seat {
+    width: 60% !important; /* Could be more or less, depending on screen size */
+    margin-top: 30% !important;
+  }
+}
+
 @media screen and (max-height: 450px) {
   .sidenav {
     padding-top: 15px;
@@ -181,12 +214,14 @@
   }
   
   .modal {
-    margin-top: 30% !important;
+    margin-top: 25% !important;
   }
-  .modal-content {
-    width: 80%; /* Could be more or less, depending on screen size */
+  .modal-content, .modal-content-seat {
+    width: 80% !important; /* Could be more or less, depending on screen size */
   }
+  
 }
+
 
 @media screen and (min-width: 768px) {
   .main {
@@ -208,6 +243,7 @@
   .register-form {
     margin-top: 20%;
   }
+
 }
 
 .login-main-text {
@@ -234,10 +270,4 @@
 
 .form-control {
   border-radius: 5px !important;
-}
-
-@media print {
-  #printableArea {
-    background-color: red;
-  }
 }

@@ -1,0 +1,23 @@
+{
+  "name": "ticketsales",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SupaatWisetsud/TicketSales.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SupaatWisetsud/TicketSales/issues"
+  },
+  "homepage": "https://github.com/SupaatWisetsud/TicketSales#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "chart.js": "^2.9.3"
+  }
+}

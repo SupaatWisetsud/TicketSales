@@ -30,8 +30,7 @@ $objUserAll = mysqli_query($con, $SQL);
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- font Awesome -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-
+    <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
 
 
@@ -41,7 +40,7 @@ $objUserAll = mysqli_query($con, $SQL);
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.php" class="logo">
-            Ticket Sales
+            <img src="svg/parking_ticket.svg" width="35px" height="35px"/>Ticket Sales
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -57,8 +56,8 @@ $objUserAll = mysqli_query($con, $SQL);
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-user"></i>
-                            <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?> <i class="caret"></i></span>
+                            <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?></span>
+                            <i class="fas fa-angle-down" style="font-size: 14px;margin-left: 5px;"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -97,7 +96,7 @@ $objUserAll = mysqli_query($con, $SQL);
                     <div class="pull-left info">
                         <p>คุณ <?= $user["u_first_name"] . " " . $user["u_last_name"] ?> </p>
                         <div>
-                            <i class="fa fa-circle text-success"></i>
+                            <i class="fas fa-circle" style="font-size: 12px;color:#58D68D"></i>
                             <?= $role == 1 ? "ผู้ดูแล" : "พนักงาน" ?>
                         </div>
                     </div>
@@ -116,7 +115,7 @@ $objUserAll = mysqli_query($con, $SQL);
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Employee
+                    <i class="fas fa-users"></i> พนักงาน
                     <small>Control panel</small>
                 </h1>
                 <!-- .breadcrumb -->
@@ -127,22 +126,38 @@ $objUserAll = mysqli_query($con, $SQL);
                 <div class="container" style="margin-bottom: 10px;">
                     <a href="add_emp.php">
                         <button class="btn btn-success">
+                            <i class="fas fa-plus"></i>
                             เพิ่มลูกจ้าง
+                        </button>
+                        <button class="btn btn-warning">
+                            <i class="fas fa-print"></i>
                         </button>
                     </a>
                 </div>
                 <div class="container">
-                    <table class="table table-striped">
+                    <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
                         <thead class="thead-dark">
                             <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Tel.</th>
-                                <th scope="col">Delete</th>
-                                <th scope="col">mote</th>
+                                <th scope="col">
+                                    <i class="fas fa-sort-numeric-down"></i>
+                                    No.
+                                </th>
+                                <th scope="col">
+                                    <i class="fas fa-envelope-square"></i>
+                                    อีเมลล์
+                                </th>
+                                <th scope="col">
+                                    <i class="fas fa-signature"></i>
+                                    ชื่อ - นามสกุล
+                                </th>
+                                <th scope="col">
+                                    <i class="fas fa-shield-alt"></i>
+                                    สถานะใช้งาน
+                                </th>
+                                <th scope="col">
+                                    <i class="fas fa-tty"></i>
+                                    เบอร์ติดต่อ
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -150,19 +165,20 @@ $objUserAll = mysqli_query($con, $SQL);
                                 <tr>
                                     <th scope="row"><?= $row["u_id"]?></th>
                                     <td><?= $row["u_email"]?></td>
-                                    <td><?= $row["u_first_name"]?></td>
-                                    <td><?= $row["u_last_name"]?></td>
+                                    <td><?= $row["u_first_name"] ." ". $row["u_last_name"] ?></td>
                                     <td><?= $row["u_role"] == 0? "ลูกจ้าง":"ผู้ดูแล" ?></td>
                                     <td><?= $row["u_tel"]?></td>
                                     <td>
                                         <a href="action/action_delete_emp.php?id=<?= $row["u_id"] ?>">
-                                            <button class="btn btn-danger">ลบ</button>
+                                            <button class="btn btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
                                         </a>
                                     </td>
                                     <td>
                                         <a href="action/action_promote_demote.php?mote=<?= $row["u_role"] == 1? "demote":"promote"?>&id=<?= $row["u_id"] ?>">
                                             <button class="btn <?= $row["u_role"] == 0? "btn-warning":"btn-dark"?>">
-                                                <?= $row["u_role"] == 0? "Promote":"Demote"?>
+                                                <?= $row["u_role"] == 0? "เพิ่มสิทธิ์":"ลดสิทธิ์"?>
                                             </button>
                                         </a>
                                     </td>
@@ -176,11 +192,7 @@ $objUserAll = mysqli_query($con, $SQL);
     </div><!-- ./wrapper -->
 
 
-    <!-- jQuery 2.0.2 -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <!-- jQuery UI 1.10.3 -->
-    <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-    <!-- Bootstrap -->
+    <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <!-- AdminLTE App -->
     <script src="js/AdminLTE/app2.js" type="text/javascript"></script>

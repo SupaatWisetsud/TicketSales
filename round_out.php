@@ -31,7 +31,8 @@ $objQuery = mysqli_query($con, $SQL);
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- font Awesome -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
+    
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
@@ -42,7 +43,7 @@ $objQuery = mysqli_query($con, $SQL);
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.php" class="logo">
-            Ticket Sales
+            <img src="svg/parking_ticket.svg" width="35px" height="35px"/>Ticket Sales
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -58,8 +59,8 @@ $objQuery = mysqli_query($con, $SQL);
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-user"></i>
-                            <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?> <i class="caret"></i></span>
+
+                            <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -98,7 +99,7 @@ $objQuery = mysqli_query($con, $SQL);
                     <div class="pull-left info">
                         <p>คุณ <?= $user["u_first_name"] . " " . $user["u_last_name"] ?> </p>
                         <div>
-                            <i class="fa fa-circle text-success"></i>
+                            <i class="fas fa-circle" style="font-size: 12px;color:#58D68D"></i>
                             <?= $role == 1 ? "ผู้ดูแล" : "พนักงาน" ?>
                         </div>
                     </div>
@@ -117,13 +118,9 @@ $objQuery = mysqli_query($con, $SQL);
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Dashboard
+                    <i class="fas fa-table"></i> ตารางรอบรถ
                     <small>Control panel</small>
                 </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="active">Dashboard</li>
-                </ol>
             </section>
 
 
@@ -139,12 +136,12 @@ $objQuery = mysqli_query($con, $SQL);
                 <div class="modal-content">
 
                     <span class="close">&times;</span>
-                    <h3>เพิ่มรอบรถ</h3>
+                    <h3><i class="fas fa-plus"></i> เพิ่มรอบรถ</h3>
 
                     <form action="action/action_add_ro.php" method="POST">
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-6">
-                                <h4>Place Start</h4>
+                                <h4><i class="fas fa-parking"></i> ต้นทาง</h4>
                                 <select class="form-control" name="place_start">
                                     <?php while ($row = mysqli_fetch_assoc($placeStartQuery)) : ?>
                                         <option value="<?= $row["ps_id"] ?>"><?= $row["ps_name"] ?></option>
@@ -152,7 +149,7 @@ $objQuery = mysqli_query($con, $SQL);
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <h4>Place End</h4>
+                                <h4><i class="fab fa-mendeley"></i> ปลายทาง</h4>
                                 <select class="form-control" name="place_end">
                                     <?php while ($row = mysqli_fetch_assoc($placeEndQuery)) : ?>
                                         <option value="<?= $row["pe_id"] ?>"><?= $row["pe_name"] ?></option>
@@ -162,7 +159,7 @@ $objQuery = mysqli_query($con, $SQL);
                         </div>
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-6">
-                                <h4>Time Start</h4>
+                                <h4 style="margin-bottom: 15px;"><i class="fas fa-hourglass-start"></i> เวลาออกเดินทาง</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">ชั่วโมง</p>
@@ -189,7 +186,7 @@ $objQuery = mysqli_query($con, $SQL);
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h4>Time End</h4>
+                                <h4 style="margin-bottom: 15px;"><i class="fas fa-hourglass-end"></i> เวลาถึง</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">ชั่วโมง</p>
@@ -218,7 +215,7 @@ $objQuery = mysqli_query($con, $SQL);
                         </div>
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-12">
-                                <h4>Bus</h4>
+                                <h4><i class="fas fa-car"></i> รถ</h4>
                                 <select class="form-control" name="bus" id="bus">
                                     <?php while ($row = mysqli_fetch_assoc($busQuery)) : ?>
                                         <option value="<?= $row["b_id"] ?>"><?= $row["b_name"] ?></option>
@@ -228,13 +225,13 @@ $objQuery = mysqli_query($con, $SQL);
                         </div>
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-12">
-                                <h4>Price</h4>
+                                <h4> <i class="fas fa-tags"></i> ราคา</h4>
                                 <input type="number" name="price" class="form-control" placeholder="Price">
                             </div>
                         </div>
 
                         <div style="margin-top: 15px; text-align: end;">
-                            <button type="submit" name="btn_add_ro" class="btn btn-success">Submit</button>
+                            <button type="submit" name="btn_add_ro" class="btn btn-success"><i class="fas fa-plus"></i> เพิ่ม</button>
                         </div>
                     </form>
                 </div>
@@ -268,13 +265,13 @@ $objQuery = mysqli_query($con, $SQL);
                 <div class="modal-content">
 
                     <a href="round_out.php"><span class="close">&times;</span></a>
-                    <h3>แก้ไขรอบรถ</h3>
+                    <h3><i class="fas fa-edit"></i> แก้ไขรอบรถ</h3>
 
                     <form action="action/action_update_ro.php" method="POST">
                         <input type="hidden" name="id" value="<?= $id ?>">
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-6">
-                                <h4>Place Start</h4>
+                                <h4><i class="fas fa-parking"></i> ต้นทาง</h4>
                                 <select class="form-control" name="place_start">
                                     <?php while ($row = mysqli_fetch_assoc($placeStartQuery)) : ?>
                                         <option <?= $ps_id == $row["ps_id"]? "selected":null ?> value="<?= $row["ps_id"] ?>"><?= $row["ps_name"] ?></option>
@@ -282,7 +279,7 @@ $objQuery = mysqli_query($con, $SQL);
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <h4>Place End</h4>
+                                <h4><i class="fab fa-mendeley"></i> ปลายทาง</h4>
                                 <select class="form-control" name="place_end">
                                     <?php while ($row = mysqli_fetch_assoc($placeEndQuery)) : ?>
                                         <option <?= $pe_id == $row["pe_id"]? "selected":null ?> value="<?= $row["pe_id"] ?>"><?= $row["pe_name"] ?></option>
@@ -292,22 +289,22 @@ $objQuery = mysqli_query($con, $SQL);
                         </div>
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-6">
-                                <h4>Time Start</h4>
+                                <h4><i class="fas fa-hourglass-start"></i> เวลาออกเดินทาง</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">ชั่วโมง</p>
-                                        <select class="form-control" name="time_start_h">
+                                        <select class="form-control" name="time_start_h" id="time_start_h2" onchange="changeTime2()">
                                             <?php for ($i = 0; $i <= 9; $i++) : ?>
                                                 <option <?= $time_start_h == "0".$i? "selected":null ?> value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
                                             <?php endfor; ?>
-                                            <?php for ($i = 10; $i <= 24; $i++) : ?>
+                                            <?php for ($i = 10; $i < 24; $i++) : ?>
                                                 <option <?= $time_start_h == $i? "selected":null ?> value="<?= $i ?>"><?= $i ?></option>
                                             <?php endfor; ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">นาที</p>
-                                        <select class="form-control" name="time_start_m">
+                                        <select class="form-control" name="time_start_m" id="time_start_m2" onchange="changeTime2()">
                                             <?php for ($i = 0; $i <= 9; $i++) : ?>
                                                 <option <?= $time_start_m == "0".$i? "selected":null ?> value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
                                             <?php endfor; ?>
@@ -319,22 +316,22 @@ $objQuery = mysqli_query($con, $SQL);
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h4>Time End</h4>
+                                <h4><i class="fas fa-hourglass-end"></i> เวลาถึง</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">ชั่วโมง</p>
-                                        <select class="form-control" name="time_end_h">
+                                        <select class="form-control" name="time_end_h" id="time_end_h2" onchange="changeTime2()">
                                             <?php for ($i = 0; $i <= 9; $i++) : ?>
                                                 <option <?= $time_end_h == "0".$i? "selected":null ?> value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
                                             <?php endfor; ?>
-                                            <?php for ($i = 10; $i <= 24; $i++) : ?>
+                                            <?php for ($i = 10; $i < 24; $i++) : ?>
                                                 <option <?= $time_end_h == $i? "selected":null ?> value="<?= $i ?>"><?= $i ?></option>
                                             <?php endfor; ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
                                         <p style="margin-left: 3px; margin-bottom: 0;">นาที</p>
-                                        <select class="form-control" name="time_end_m">
+                                        <select class="form-control" name="time_end_m" id="time_end_m2" onchange="changeTime2()">
                                             <?php for ($i = 0; $i <= 9; $i++) : ?>
                                                 <option <?= $time_end_m == "0".$i? "selected":null ?> value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
                                             <?php endfor; ?>
@@ -348,8 +345,8 @@ $objQuery = mysqli_query($con, $SQL);
                         </div>
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-12">
-                                <h4>Bus</h4>
-                                <select class="form-control" name="bus">
+                                <h4><i class="fas fa-car"></i> รถ</h4>
+                                <select class="form-control" name="bus" id="bus2">
                                     <?php while ($row = mysqli_fetch_assoc($busQuery)) : ?>
                                         <option <?= $bus_id == $row["b_id"]? "selected":null ?> value="<?= $row["b_id"] ?>"><?= $row["b_name"] ?></option>
                                     <?php endwhile; ?>
@@ -358,13 +355,13 @@ $objQuery = mysqli_query($con, $SQL);
                         </div>
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-12">
-                                <h4>Price</h4>
+                                <h4><i class="fas fa-tags"></i> ราคา</h4>
                                 <input type="number" value="<?= $price ?>" name="price" class="form-control" placeholder="Price">
                             </div>
                         </div>
 
                         <div style="margin-top: 15px; text-align: end;">
-                            <button type="submit" name="btn_add_ro" class="btn btn-success">Submit</button>
+                            <button type="submit" name="btn_add_ro" class="btn btn-warning"><i class="fas fa-edit"></i> แก้ไข</button>
                         </div>
                     </form>
                 </div>
@@ -377,20 +374,24 @@ $objQuery = mysqli_query($con, $SQL);
             <!-- Main content -->
             <section class="content container">
                 <div class="add_ro" style="margin-bottom: 5px;">
-                    <button id="myBtn" class="btn btn-primary">เพิ่มรอบรถ</button>
+                    <button id="myBtn" class="btn btn-success"> <i class="fas fa-plus"></i> เพิ่มรอบรถ</button>
+                    
+                    <button class="btn btn-warning">
+                        <i class="fas fa-print"></i>
+                    </button>
                 </div>
-                <table class="table table-striped">
+                <table class="table table-striped text-center" style="margin-top: 15px;">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Place Start</th>
-                            <th scope="col">Place End</th>
-                            <th scope="col">Time Start</th>
-                            <th scope="col">Time End</th>
-                            <th scope="col">Bus</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Edit</th>
-                            <th scope="col">Delete</th>
+                            <th scope="col">
+                                <i class="fas fa-sort-numeric-down"></i> No.
+                            </th>
+                            <th scope="col"> <i class="fas fa-parking"></i> ต้นทาง</th>
+                            <th scope="col"> <i class="fab fa-mendeley"></i> ปลายทาง</th>
+                            <th scope="col"> <i class="fas fa-hourglass-start"></i> เวลาเดินทาง</th>
+                            <th scope="col"> <i class="fas fa-hourglass-end"></i> เวลาถึง</th>
+                            <th scope="col"> <i class="fas fa-car"></i> รถ</th>
+                            <th scope="col"> <i class="fas fa-tags"></i> ราคา</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -408,12 +409,12 @@ $objQuery = mysqli_query($con, $SQL);
                                 <td><?= $row["ro_price"] ?></td>
                                 <td>
                                     <a href="?edit=1&id=<?= $row["ro_id"] ?>&ps_id=<?= $row["ps_id"] ?>&pe_id=<?= $row["pe_id"] ?>&time_start=<?= $row["ro_time_start"] ?>&time_end=<?= $row["ro_time_end"] ?>&bus_id=<?= $row["b_id"] ?>&price=<?= $row["ro_price"] ?>">
-                                        <button class="btn btn-warning">แก้ไข</button>
+                                        <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
                                     </a>
                                 </td>
                                 <td>
                                     <a href="action/action_delete_ro.php?id=<?= $row["ro_id"] ?>">
-                                        <button class="btn btn-danger">ลบ</button>
+                                        <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                     </a>
                                 </td>
                             </tr>
@@ -431,17 +432,31 @@ $objQuery = mysqli_query($con, $SQL);
     <!-- add new calendar event modal -->
 
 
-    <!-- jQuery 2.0.2 -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <!-- jQuery UI 1.10.3 -->
-    <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-    <!-- Bootstrap -->
+    <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
-
-    <!-- AdminLTE App -->
     <script src="js/AdminLTE/app2.js" type="text/javascript"></script>
-    <script src="js/index.js" type="text/javascript"></script>
-    <script src="js/round_out2.js" type="text/javascript"></script>
+    <script src="js/round_out.js" type="text/javascript"></script>
 </body>
 
 </html>
+
+<script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function () {
+    modal.style.display = "block";
+    };
+
+    span.onclick = function () {
+    modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    };
+</script>

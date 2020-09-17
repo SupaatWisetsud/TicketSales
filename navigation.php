@@ -6,36 +6,49 @@
                     && !strpos($url, "seat") 
                     && !strpos($url, "ticket_sales")
                     && !strpos($url, "add_emp")
+                    && !strpos($url, "start_end")
 ?>
 <ul class="sidebar-menu">
     <?php if ($role == 1) { ?>
     <!-- admin -->
     <li class="<?= $currentIndex? 'active':null ?>">
         <a href="index.php">
-            <i class="fa fa-dashboard"></i> <span>หน้าหลัก</span>
+            <i class="fas fa-tachometer-alt" style="font-size: 14px;"></i>
+            <span> หน้าหลัก</span>
         </a>
     </li>
     <li class="<?= strpos($url, "employee") || strpos($url, "add_emp")? 'active':null?>">
         <a href="employee.php">
-            <i class="fa fa-dashboard"></i> <span>พนักงาน</span>
+            <i class="fas fa-user-friends" style="font-size: 14px;"></i>
+            <span> พนักงาน</span>
         </a>
     </li>
 
     <li class="<?= strpos($url, "round_out")? 'active':null?>">
         <a href="round_out.php">
-            <i class="fa fa-dashboard"></i> <span>ตารางรอบรถ</span>
+            <i class="fas fa-table" style="font-size: 14px;"></i>
+            <span> ตารางรอบรถ</span>
+        </a>
+    </li>
+
+    <li class="<?= strpos($url, "start_end")? 'active':null?>">
+        <a href="start_end.php">
+        <i class="fas fa-car" style="font-size: 14px;"></i>
+            <span> ต้นทาง / ปลายทาง</span>
         </a>
     </li>
 
     <li class="<?= strpos($url, "seat")? 'active':null?>">
         <a href="seat.php">
-            <i class="fa fa-dashboard"></i> <span>ที่นั้ง</span>
+            <i class="fas fa-chair" style="font-size: 14px;"></i>
+            <span> ที่นั้ง</span>
         </a>
     </li>
 
     <li class="<?= strpos($url, "ticket_sales")? 'active':null?>">
-        <a href="#">
-            <i class="fa fa-dashboard"></i> <span>รายงานการขายตั๋ว</span>
+        <a href="ticket_sales.php">
+            <i class="fas fa-pager" style="font-size: 14px;"></i>
+            <span> รายงานการขายตั๋ว</span>
         </a>
     </li>
     <?php 
@@ -44,19 +57,26 @@
     <!-- emp -->
     <li class="<?= $currentIndex? 'active':null ?>">
         <a href="index.php">
-            <i class="fa fa-dashboard"></i> <span>หน้าหลัก</span>
+            <span>หน้าหลัก</span>
         </a>
     </li>
 
     <li class="<?= strpos($url, "round_out")? 'active':null?>">
         <a href="round_out.php">
-            <i class="fa fa-dashboard"></i> <span>ตารางรอบรถ</span>
+            <span>ตารางรอบรถ</span>
+        </a>
+    </li>
+    
+    <li class="<?= strpos($url, "start_end")? 'active':null?>">
+        <a href="start_end.php">
+        <i class="fas fa-car" style="font-size: 14px;"></i>
+            <span> ต้นทาง / ปลายทาง</span>
         </a>
     </li>
 
     <li class="<?= strpos($url, "seat")? 'active':null?>">
         <a href="seat.php">
-            <i class="fa fa-dashboard"></i> <span>ที่นั้ง</span>
+            <span>ที่นั้ง</span>
         </a>
     </li>
     <?php } ?>

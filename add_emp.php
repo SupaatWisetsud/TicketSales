@@ -25,7 +25,7 @@ $user = mysqli_fetch_assoc($objQuery);
     <!-- bootstrap 3.0.2 -->
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <!-- font Awesome -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
 
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link href="css/custom.css" rel="stylesheet" type="text/css" />
@@ -37,7 +37,7 @@ $user = mysqli_fetch_assoc($objQuery);
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.php" class="logo">
-            Ticket Sales
+            <img src="svg/parking_ticket.svg" width="35px" height="35px"/>Ticket Sales
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -53,8 +53,7 @@ $user = mysqli_fetch_assoc($objQuery);
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-user"></i>
-                            <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?> <i class="caret"></i></span>
+                            <span> <?= $user["u_first_name"] . " " . $user["u_last_name"] ?></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -93,7 +92,6 @@ $user = mysqli_fetch_assoc($objQuery);
                     <div class="pull-left info">
                         <p>คุณ <?= $user["u_first_name"] . " " . $user["u_last_name"] ?> </p>
                         <div>
-                            <i class="fa fa-circle text-success"></i>
                             <?= $role == 1 ? "ผู้ดูแล" : "พนักงาน" ?>
                         </div>
                     </div>
@@ -110,47 +108,48 @@ $user = mysqli_fetch_assoc($objQuery);
         <!-- Right side column. Contains the navbar and content of the page -->
         <aside class="right-side">
             <!-- Content Header (Page header) -->
-            <section class="content-header">
+            <section class="content-header" style="display: flex;">
+                <a href="employee.php"><i class="fas fa-arrow-left" style="margin-right: 5px; font-size: 24px; color:#000"></i></a>
                 <h1>
-                    เพิ่มลูกจ้าง
+                    <i class="fas fa-users"></i> เพิ่มลูกจ้าง
                 </h1>
             </section>
 
             <!-- Main content -->
             <section class="content container content_add_emp">
                 <form class="form_add_emp" action="action/action_add_emp.php" method="POST">
-                    <div class="form_title">กรอกข้อมูลลูกจ้าง</div>
+                    <div class="form_title"><i class="fab fa-wpforms"></i> กรอกข้อมูลลูกจ้าง</div>
                     <div class="form-group">
-                        <label for="email">Email address</label>
+                        <label for="email"> <i class="fas fa-envelope-square"></i> อีเมลล์</label>
                         <input type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" required autofocus>
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password"> <i class="fas fa-key"></i> รหัสผ่าน</label>
                         <input type="password" name="password" class="form-control" placeholder="Password" required>
                     </div>
                     <div class="form-group">
-                        <label for="confirm_password">Confirm Password</label>
+                        <label for="confirm_password"> <i class="fas fa-unlock-alt"></i> ยืนยันรหัสผ่าน </label>
                         <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
                     </div>
 
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
-                                <label for="first_name">First Name</label>
+                                <label for="first_name"><i class="fas fa-signature"></i> ชื่อ</label>
                                 <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
-                                <label for="last_name">Last Name</label>
+                                <label for="last_name"><i class="fas fa-file-signature"></i> นามสกุล</label>
                                 <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
                             </div>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="first_name">Role</label>
+                        <label for="first_name"><i class="fas fa-shield-alt"></i> สิทธิ์การใช้งาน</label>
                         <select class="form-control" name="role">
                             <option value="0">ลูกจ้าง</option>
                             <option value="1">ผู้ดูแล</option>
@@ -158,13 +157,19 @@ $user = mysqli_fetch_assoc($objQuery);
                     </div>
 
                     <div class="form-group">
-                        <label for="tel">Tel.</label>
+                        <label for="tel"><i class="fas fa-tty"></i> เบอร์โทรติดต่อ</label>
                         <input type="text" name="tel" class="form-control" maxlength="10" placeholder="Tel" required>
                     </div>
                     
                     <div class="text-center">
-                        <button type="submit" name="add_emp_submit" class="btn btn-primary">Submit</button>
-                        <button type="reset" class="btn btn-danger">Reset</button>
+                        <button type="submit" name="add_emp_submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            เพิ่ม
+                        </button>
+                        <button type="reset" class="btn btn-danger">
+                            <i class="fas fa-undo-alt"></i>
+                            รีเซ็ต
+                        </button>
                     </div>
                 </form>
 
