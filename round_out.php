@@ -340,6 +340,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                 ?>
                 <!-- table round -->
                 <h4><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
+                <div style="overflow-x: auto;">
                 <table class="table table-striped text-center" style="margin-top: 15px;">
                     <thead class="thead-dark" style="background-color: #5DADE2;color:white">
                         <tr>
@@ -384,6 +385,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                         ?>
                     </tbody>
                 </table>
+                </div>
                 <!-- end table round -->
                 <?php 
                     endwhile;

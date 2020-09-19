@@ -277,7 +277,7 @@ if(isset($_GET["clean_seant"])){
 
                 <div class="row">
                     <div class="col-md-6">
-                        <div style="overflow-x: auto; margin-top: 15px;">
+                        <div style="margin-top: 15px;">
                                 <?php 
                                     
                                     $rountResult = mysqli_fetch_all($rountQuery, MYSQLI_ASSOC);
@@ -285,6 +285,7 @@ if(isset($_GET["clean_seant"])){
                                 ?>
                                     <h4><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
                                             
+                                    <div style="overflow-x: auto;">
                                     <table class="table text-center" >
                                         <thead style="background-color: #5DADE2; color: white;">
                                             <tr>
@@ -347,6 +348,7 @@ if(isset($_GET["clean_seant"])){
                                         
                                         </tbody>
                                     </table>
+                                    </div>
                                 <?php
                                     };
                                 ?>

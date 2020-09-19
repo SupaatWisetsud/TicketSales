@@ -107,7 +107,6 @@ function printReport() {
                         <th>รอบถึง</th>
                         <th>ที่นั้ง</th>
                         <th>รถ</th>
-                        <th>รหัสรถ</th>
                         <th>ผู้ขายตั๋ว</th>
                         <th>ราคา</th>
                         <th>วันที่/เดือน/ปี</th>
@@ -125,8 +124,7 @@ function printReport() {
                             <td>${list_sale_data[i].ro_time_start}</td>
                             <td>${list_sale_data[i].pe_name}</td>
                             <td>${list_sale_data[i].seat_name}</td>
-                            <td>${list_sale_data[i].b_name}</td>
-                            <td>${list_sale_data[i].b_id}</td>
+                            <td>${list_sale_data[i].b_name} - ${list_sale_data[i].b_id}</td>
                             <td>${list_sale_data[i].sale_emp_name}</td>
                             <td>${list_sale_data[i].sale_price}</td>
                             <td>${list_sale_data[i].sale_time_sale}</td>

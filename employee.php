@@ -134,7 +134,7 @@ $objUserAll = mysqli_query($con, $SQL);
                         <i class="fas fa-print"></i>
                     </button>
                 </div>
-                <div class="container">
+                <div class="container" style="overflow-x: auto;">
                     <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
                         <thead class="thead-dark" style="background-color: #5DADE2;color:white">
                             <tr>
