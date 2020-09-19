@@ -35,10 +35,10 @@ $topQuery = mysqli_query($con, $SQL);
 $page = 1;
 $limit = 8;
 
-if(isset($_GET["page"])){
+if (isset($_GET["page"])) {
     $page = (int)$_GET["page"];
 }
-if(isset($_GET["limit"])){
+if (isset($_GET["limit"])) {
     $limit = (int)$_GET["limit"];
 }
 
@@ -57,7 +57,7 @@ $SQL = "SELECT
         INNER JOIN tb_bus ON tb_round_out.ro_bus = tb_bus.b_id
         INNER JOIN tb_seat ON tb_sales.sale_seat = tb_seat.seat_id
         ORDER BY tb_sales.sale_time_sale DESC
-        LIMIT ". ($page - 1) * $limit .",".$limit;
+        LIMIT " . ($page - 1) * $limit . "," . $limit;
 
 $listSaleQuery = mysqli_query($con, $SQL);
 
@@ -77,14 +77,35 @@ $listSaleQuery = mysqli_query($con, $SQL);
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
+    <style>
+        @media print {
+            #navigation_sales, 
+            #print_report,
+            #show_count_page {
+                display:none;
+            }
+            #title_chart {
+                display: block !important;
+            }
+            #myChartLine {
+                width: 100% !important;
+            }
+            #show_count_page_print {
+                display: block !important;
+            }
+        }
 
+        /* #title_chart {
+            display: none;
+        } */
+    </style>
 </head>
 
 <body class="skin-blue">
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.php" class="logo">
-            <img src="svg/parking_ticket.svg" width="35px" height="35px"/>Ticket Sales
+            <img src="svg/parking_ticket.svg" width="35px" height="35px" />Ticket Sales
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -168,54 +189,114 @@ $listSaleQuery = mysqli_query($con, $SQL);
             <section class="content container">
 
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="box-chart" style="background-color: #34495E;">
-                            <?php 
+                    <!-- show page -->
+                    <div id="show_count_page">
+                        <div class="col-md-4">
+                            <div class="box-chart" style="background-color: #34495E;">
+                                <?php
                                 $SQL = "SELECT COUNT(*) FROM tb_sales";
                                 $countSaleQuery = mysqli_query($con, $SQL);
                                 $countSale = mysqli_fetch_row($countSaleQuery);
-                            ?>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h4><i class="fas fa-ticket-alt"></i> จำนวนการขายตั๋ว</h4>
+                                ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4><i class="fas fa-ticket-alt"></i> จำนวนการขายตั๋ว</h4>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <h3><?= $countSale[0] ?> ตั๋ว</h3>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <h3><?= $countSale[0] ?> ตั๋ว</h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="box-chart" style="background-color: #5DADE2;">
-                            <?php 
+                        <div class="col-md-4">
+                            <div class="box-chart" style="background-color: #5DADE2;">
+                                <?php
                                 $SQL = "SELECT SUM(sale_price) FROM tb_sales";
                                 $countPriceQuery = mysqli_query($con, $SQL);
                                 $countPrice = mysqli_fetch_row($countPriceQuery);
-                            ?>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h4><i class="fas fa-clipboard-list"></i> ยอดการขาย</h4>
+                                ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4><i class="fas fa-clipboard-list"></i> ยอดการขาย</h4>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 text-right">
-                                    <h3><?= $countPrice[0] ?> ฿</h3>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <h3><?= $countPrice[0] ?> ฿</h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 text-right">
-                        <button class="btn btn-warning">
+                        <button class="btn btn-warning" id="print_report" onclick="printReport()">
                             <i class="fas fa-print"></i>
                         </button>
                     </div>
                 </div>
+                
+                <!-- show in print -->
+                <div class="row" id="show_count_page_print" style="display: none;">
+                    <div style="padding-left: 25px;display: flex; justify-content: space-between;">
+                        <h1 style=" font-weight: bold;">Ticket Sales</h1>
+                        <p><?= date('m/d/Y H:i:s', time()) ?></p>
+                    </div>
+                    <div style="padding-left: 20px;margin-top: 1%;">
+                        <?php
+                        $SQL = "SELECT COUNT(*) FROM tb_sales";
+                        $countSaleQuery = mysqli_query($con, $SQL);
+                        $countSale = mysqli_fetch_row($countSaleQuery);
+                        ?>
+                        <div class="row" style="display: flex; padding-left: 25px;">
+                            <div style="flex: 1;">
+                                <h4 style="margin-right: 80px;"><i class="fas fa-ticket-alt"></i> จำนวนการขายตั๋ว</h4>
+                            </div>
+                            <div style="flex: 1;justify-content: end; align-items: flex-end;">
+                                <h4><?= $countSale[0] ?> ตั๋ว</h4>
+                            </div>
+                        </div>
+                        <?php
+                        $SQL = "SELECT SUM(sale_price) FROM tb_sales";
+                        $countPriceQuery = mysqli_query($con, $SQL);
+                        $countPrice = mysqli_fetch_row($countPriceQuery);
+                        ?>
+                        <div class="row" style="display: flex; padding-left: 25px;">
+                            <div style="flex: 1;">
+                                <h4 style="margin-right: 80px;"><i class="fas fa-clipboard-list"></i> ยอดการขาย</h4>
+                            </div>
+                            <div style="flex: 1;justify-content: end; align-items: flex-end;">
+                                <h4><?= $countPrice[0] ?> ฿</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                    
 
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="chart">
+                        <?php 
+                            $month = [
+                                "มกราคม (January)",
+                                "กุมภาพันธ์ (February)",
+                                "มีนาคม (March)",
+                                "เมษายน (April)",
+                                "พฤษภาคม (May)",
+                                "มิถุนายน (June)",
+                                "กรกฎาคม (July)",
+                                "สิงหาคม (August)",
+                                "กันยายน (September)",
+                                "ตุลาคม (October)",
+                                "พฤศจิกายน (November)",
+                                "ธันวาคม (December)"
+                            ]
+                        ?>
+                        <div id="title_chart" style="display: none;text-align: center;border: 1px solid #333;margin-top: 5%;">
+                            <h4 style="font-weight: bold;">กราฟแสดงยอดการขายในเดือน <?= $month[(int)date('m') - 1] ?></h4>
+                        </div>
+                        <div class="chart" style="border: 1px solid #333; border-radius: 5px;">
                             <canvas id="myChartLine" width="400" height="250"></canvas>
                         </div>
                     </div>
@@ -238,8 +319,8 @@ $listSaleQuery = mysqli_query($con, $SQL);
                                         </thead>
                                         <tbody>
                                             <?php
-                                                $i = 1; 
-                                                while($row = mysqli_fetch_assoc($topQuery)): 
+                                            $i = 1;
+                                            while ($row = mysqli_fetch_assoc($topQuery)) :
                                             ?>
                                                 <tr>
                                                     <td><?= $i ?></td>
@@ -250,9 +331,9 @@ $listSaleQuery = mysqli_query($con, $SQL);
                                                     <td><?= $row["ro_price"] ?></td>
                                                     <td><?= $row["sale_count"] ?></td>
                                                 </tr>
-                                            <?php 
+                                            <?php
                                                 $i++;
-                                                endwhile;
+                                            endwhile;
                                             ?>
                                         </tbody>
                                     </table>
@@ -271,7 +352,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
                     <div class="col-md-12">
                         <div class="box-table-chart">
                             <div style="overflow-y: auto;">
-                                <table class="table table-striped text-center">
+                                <table class="table table-striped text-center" id="list_sale_table">
                                     <thead style="background-color: #5DADE2; color:white">
                                         <tr>
                                             <th>No.</th>
@@ -287,33 +368,33 @@ $listSaleQuery = mysqli_query($con, $SQL);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php while($row = mysqli_fetch_assoc($listSaleQuery)): ?>
-                                        <tr>
-                                            <td><?= $row["sale_id"] ?></td>
-                                            <td><?= $row["ps_name"] ?></td>
-                                            <td><?= $row["ro_time_start"] ?></td>
-                                            <td><?= $row["pe_name"] ?></td>
-                                            <td><?= $row["ro_time_end"] ?></td>
-                                            <td><?= $row["seat_name"] ?></td>
-                                            <td><?= $row["b_name"] ?></td>
-                                            <td><?= $row["u_first_name"]. " " .$row["u_last_name"] ?></td>
-                                            <td><?= $row["sale_price"] ?></td>
-                                            <td><?= $row["sale_time_sale"] ?></td>
-                                        </tr>
+                                        <?php while ($row = mysqli_fetch_assoc($listSaleQuery)) : ?>
+                                            <tr>
+                                                <td><?= $row["sale_id"] ?></td>
+                                                <td><?= $row["ps_name"] ?></td>
+                                                <td><?= $row["ro_time_start"] ?></td>
+                                                <td><?= $row["pe_name"] ?></td>
+                                                <td><?= $row["ro_time_end"] ?></td>
+                                                <td><?= $row["seat_name"] ?></td>
+                                                <td><?= $row["b_name"] ?></td>
+                                                <td><?= $row["u_first_name"] . " " . $row["u_last_name"] ?></td>
+                                                <td><?= $row["sale_price"] ?></td>
+                                                <td><?= $row["sale_time_sale"] ?></td>
+                                            </tr>
                                         <?php endwhile; ?>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <nav aria-label="Page navigation">
+                                    <nav aria-label="Page navigation" id="navigation_sales">
                                         <ul class="pagination">
                                             <?php
-                                                $page_current = 1;
-                                                if(isset($_GET["page"])) $page_current = (int)$_GET["page"]; 
-                                                for($i = 1; $i <= $count_page; $i++): 
+                                            $page_current = 1;
+                                            if (isset($_GET["page"])) $page_current = (int)$_GET["page"];
+                                            for ($i = 1; $i <= $count_page; $i++) :
                                             ?>
-                                                <li class="page-item <?= $page_current == $i? 'active':null ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                                                <li class="page-item <?= $page_current == $i ? 'active' : null ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
                                             <?php endfor; ?>
                                         </ul>
                                     </nav>
@@ -342,66 +423,159 @@ $listSaleQuery = mysqli_query($con, $SQL);
 </html>
 
 <script>
+    
+    var dataList = [
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0
+    ];
 
-var day = []
-for(let i = 1; i <= 31; i++) {
-    day = [...day, i];
-}
-const month = [
-    "มกราคม (January)",
-    "กุมภาพันธ์ (February)",
-    "มีนาคม (March)",
-    "เมษายน (April)",
-    "พฤษภาคม (May)",
-    "มิถุนายน (June)",
-    "กรกฎาคม (July)",
-    "สิงหาคม (August)",
-    "กันยายน (September)",
-    "ตุลาคม (October)",
-    "พฤศจิกายน (November)",
-    "ธันวาคม (December)"
-]
-var ctxLine = document.getElementById('myChartLine').getContext('2d');
+    var objRespones = [];
 
-const d = new Date();
-var data = {
-    labels: day,
-    datasets: [{
-        label: 'ยอดขายในเดือน ' + month[d.getMonth()],
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
-    }]
-}
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "server/server_list_sale_chart.php?pass=hsr224");
+    xhr.onreadystatechange = responseXHR;
+    xhr.send(null);
 
-var options = {
-    scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
+    function responseXHR() {
+        if (xhr.readyState == 4) {
+            console.log(JSON.parse(xhr.responseText));
+            objRespones = JSON.parse(xhr.responseText);
+            
+            for(let n = 0; n < objRespones.length; n++) {
+                var d = new Date(objRespones[n].sale_time_sale);
+                
+                for (let i = 0; i < 31; i++) {
+                    if (d.getDay() + 13 == i + 1) {
+                        dataList[i] = parseInt(objRespones[n].sale_count);
+                    }
+                }
             }
-        }]
+            generateChart(dataList);
+        }
     }
-}
 
-var myLineChart = new Chart(ctxLine, {
-    type: 'line',
-    data: data,
-    options: options
-});
+    function generateChart(dataList) {
+        var day = []
+        for (let i = 1; i <= 31; i++) {
+            day = [...day, i];
+        }
+        const month = [
+            "มกราคม (January)",
+            "กุมภาพันธ์ (February)",
+            "มีนาคม (March)",
+            "เมษายน (April)",
+            "พฤษภาคม (May)",
+            "มิถุนายน (June)",
+            "กรกฎาคม (July)",
+            "สิงหาคม (August)",
+            "กันยายน (September)",
+            "ตุลาคม (October)",
+            "พฤศจิกายน (November)",
+            "ธันวาคม (December)"
+        ]
+        var ctxLine = document.getElementById('myChartLine').getContext('2d');
+
+        const d = new Date();
+
+        var data = {
+            labels: day,
+            datasets: [{
+                label: 'ยอดขายในเดือน ' + month[d.getMonth()],
+                data: dataList,
+                backgroundColor: ['rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        }
+
+        var options = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+
+        var myLineChart = new Chart(ctxLine, {
+            type: 'line',
+            data: data,
+            options: options
+        });
+    }
+
+
+    function printReport() {
+
+        var list_sale = document.getElementById("list_sale_table");
+        var originList = list_sale.innerHTML;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "server/server_list_sale_all.php?pass=hsr224");
+        xhr.onreadystatechange = responseXHR;
+        xhr.send(null);
+
+        function responseXHR() {
+            if (xhr.readyState == 4) {
+                console.log(JSON.parse(xhr.responseText));
+                let list_sale_data = JSON.parse(xhr.responseText);
+
+                let generateTableListSale = `
+                    <thead style="background-color: #5DADE2; color:white">
+                        <tr>
+                            <th>No.</th>
+                            <th>ไอดี</th>
+                            <th>รอบออก</th>
+                            <th>เวลาออก</th>
+                            <th>รอบถึง</th>
+                            <th>เวลาถึง</th>
+                            <th>ที่นั้ง</th>
+                            <th>รถ</th>
+                            <th>รหัสรถ</th>
+                            <th>ผู้ขายตั๋ว</th>
+                            <th>ราคา</th>
+                            <th>วันที่/เดือน/ปี</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+                
+                for(let i = 0; i < list_sale_data.length; i++) {
+                    generateTableListSale += `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${list_sale_data[i].sale_id}</td>
+                                <td>${list_sale_data[i].ps_name}</td>
+                                <td>${list_sale_data[i].ro_time_start}</td>
+                                <td>${list_sale_data[i].pe_name}</td>
+                                <td>${list_sale_data[i].ro_time_end}</td>
+                                <td>${list_sale_data[i].seat_name}</td>
+                                <td>${list_sale_data[i].b_name}</td>
+                                <td>${list_sale_data[i].b_id}</td>
+                                <td>${list_sale_data[i].sale_emp_name}</td>
+                                <td>${list_sale_data[i].sale_price}</td>
+                                <td>${list_sale_data[i].sale_time_sale}</td>
+                            </tr>
+                    `
+                }
+
+                generateTableListSale += `
+                    </tbody>
+                `;
+                list_sale.innerHTML = generateTableListSale; 
+                window.print();
+
+                list_sale.innerHTML = originList;
+            }
+        }
+        // var chartCanvas = document.getElementById("myChartLine");
+
+        // var mywindow = window.open('', '', 'height=600,width=900');
+        // mywindow.document.write();
+        // mywindow.document.close();
+        // mywindow.focus();
+        // mywindow.print();
+    }
 </script>

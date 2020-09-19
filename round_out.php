@@ -483,7 +483,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
 </script>
 
 <script>
-      function listRound() {
+    function listRound() {
         var xhr = new XMLHttpRequest();
         xhr.open ("GET", "server/server_list_round_out.php?pass=hsr224");
         xhr.onreadystatechange = responseXHR;
@@ -500,7 +500,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
     }
 
 
-    function print(listUser) {
+    function print(list) {
         var mywindow = window.open('', '', 'height=600,width=900');
         
         var genarataPrint = `
@@ -514,6 +514,11 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                         <h1>Ticket Sales</h1>
                         <p>รายการรอบรถ</p>
                     </div>
+        `;
+        
+        for(let n = 0; n < list.length; n++) {
+            genarataPrint += `
+                    <div><h3>${list[n].round}</h3></div>
                     <table style="width:100%;text-align:center" border="1px" >
                         <thead>
                             <tr>
@@ -524,30 +529,37 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                                 <th>เวลาเดินทาง</th>
                                 <th>เวลาถึง</th>
                                 <th>รถ</th>
+                                <th>หมายเลขรถ</th>
                                 <th>ราคา</th>
                             </tr>
                         </thead>
                         <tbody>  
-        `;
-        
-        for(let i = 0; i < listUser.length; i++) {
+            `;
             
-            // genarataPrint += `
-            //                 <tr>
-            //                     <td>${i + 1}</td>
-            //                     <td>${listUser[i].u_id}</td>
-            //                     <td>${listUser[i].u_email}</td>
-            //                     <td>${listUser[i].u_first_name}</td>
-            //                     <td>${listUser[i].u_last_name}</td>
-            //                     <td>${listUser[i].u_role === 0? "ลูกจ้าง":"ผู้ดูแล"}</td>
-            //                     <td>${listUser[i].u_tel}</td>
-            //                 </tr>
-            // `
+            for(let x = 0; x < list[n].list.length; x++) {
+                genarataPrint += `
+                    <tr>
+                        <td>${x + 1}</td>
+                        <td>${list[n].list[x].ro_id}</td>
+                        <td>${list[n].list[x].ps_name}</td>
+                        <td>${list[n].list[x].pe_name}</td>
+                        <td>${list[n].list[x].ro_time_start}</td>
+                        <td>${list[n].list[x].ro_time_end}</td>
+                        <td>${list[n].list[x].b_name}</td>
+                        <td>${list[n].list[x].b_id}</td>
+                        <td>${list[n].list[x].ro_price}</td>
+                    </tr>
+                `
+            }
+
+            genarataPrint += `
+                        </tbody>
+                    </table>
+            `;
+
         }
 
         genarataPrint += `
-                        </tbody>
-                    </table>
                 </body>
             </html>
         `;
