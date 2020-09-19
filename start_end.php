@@ -15,9 +15,19 @@ if (!mysqli_num_rows($objQuery)) header("location:login.php");
 $user = mysqli_fetch_assoc($objQuery);
 
 $SQL = "SELECT * FROM tb_place_start";
+
+if(isset($_SESSION["seach_ps"])) {
+    $SQL = "SELECT * FROM tb_place_start WHERE ps_name LIKE '%{$_SESSION['seach_ps']}%'";
+}
+
 $psQuery = mysqli_query($con, $SQL);
 
 $SQL = "SELECT * FROM tb_place_end";
+
+if(isset($_SESSION["seach_pe"])) {
+    $SQL = "SELECT * FROM tb_place_end WHERE pe_name LIKE '%{$_SESSION['seach_pe']}%'";
+}
+
 $peQuery = mysqli_query($con, $SQL);
 
 ?>
@@ -144,7 +154,7 @@ $peQuery = mysqli_query($con, $SQL);
                                                 <button class="btn btn-success" name="btn_add_ps" style="width: 100%;"><i class="fas fa-plus"></i> เพิ่ม</button>
                                             </div>
                                             <div class="col-md-3">
-                                                <a class="btn btn-primary" href="#" style="width: 100%;"><i class="fas fa-search" style="font-size: 14px;"></i> ค้นหา</a>
+                                                <button class="btn btn-primary" name="btn_seach_ps" style="width: 100%;"><i class="fas fa-search" style="font-size: 14px;"></i> ค้นหา</button>
                                             </div>
                                         </div>
                                     </form>
@@ -212,7 +222,7 @@ $peQuery = mysqli_query($con, $SQL);
                                                 <button class="btn btn-success" name="btn_add_pe" style="width: 100%;"><i class="fas fa-plus"></i> เพิ่ม</button>
                                             </div>
                                             <div class="col-md-3">
-                                                <a class="btn btn-primary" href="#" style="width: 100%;"><i class="fas fa-search" style="font-size: 14px;"></i> ค้นหา</a>
+                                                <button class="btn btn-primary" name="btn_seach_pe" style="width: 100%;"><i class="fas fa-search" style="font-size: 14px;"></i> ค้นหา</ิ>
                                             </div>
                                         </div>
                                     </form>

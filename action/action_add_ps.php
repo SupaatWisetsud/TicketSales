@@ -4,6 +4,14 @@
 
     if(!isset($_SESSION["user_id"])) header("location:../login.php");
     
+    if(isset($_POST["btn_seach_ps"])) {
+        if($_POST["name"] != "") {
+            $_SESSION["seach_ps"] = $_POST["name"];
+        }else {
+            unset($_SESSION["seach_ps"]);
+        }
+        header("location:../start_end.php");
+    }
     if(isset($_POST["btn_add_ps"])) {
         $name = $_POST["name"];
         

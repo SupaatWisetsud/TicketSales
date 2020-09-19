@@ -155,11 +155,11 @@ $user = mysqli_fetch_assoc($objQuery);
                     </div>
                     
                     <div class="text-center">
-                        <button type="submit" name="add_emp_submit" class="btn btn-primary">
-                            <i class="fas fa-plus"></i>
+                        <button type="submit" name="add_emp_submit" class="btn btn-warning">
+                            <i class="fas fa-user-edit"></i>
                             แก้ไข
                         </button>
-                        <button type="reset" class="btn btn-danger">
+                        <button type="reset" class="btn btn-primary">
                             <i class="fas fa-undo-alt"></i>
                             ยกเลิก
                         </button>

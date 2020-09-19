@@ -242,7 +242,8 @@ if(isset($_GET["clean_seant"])){
                                     </select>
                                 </div>
                                 <div class="col-md-1" style="display: flex; justify-content: center; align-items: center;">
-                                    <i class="fas fa-arrow-alt-circle-right" style="font-size:32px"></i>
+
+                                    <i class="fas fa-car-side" style="font-size:32px"></i>
                                 </div>
                                 <div class="col-md-4">
                                     <select class="form-control" name="search_end">
@@ -406,7 +407,7 @@ if(isset($_GET["clean_seant"])){
 
                                                 if(isset($_SESSION["set_select_seat"][$row["seat_id"]])) {
                                                     echo "
-                                                    <a href='?ro_id={$_GET['ro_id']}&bus_id={$_GET['bus_id']}&select_seat={$row['seat_id']}&price={$_GET['price']}$pach_search'>
+                                                    <a href='?ro_id={$_GET['ro_id']}&bus_id={$_GET['bus_id']}&select_seat={$row['seat_id']}&price={$_GET['price']}$pach_search&seat_name'>
                                                         <div class='col-md-3 col-sm-6 box-seat-item select-box-seat'> 
                                                             <img src='svg/seat2.svg' class='box-seat-item-image'>
                                                             <p class='label label-success' style='margin-top: 8px;' >{$row['seat_name']}</p>

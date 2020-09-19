@@ -3,7 +3,16 @@
     require "../connect.php";
 
     if(!isset($_SESSION["user_id"])) header("location:../login.php");
-    
+   
+    if(isset($_POST["btn_seach_pe"])) {
+        if($_POST["name"] != "") {
+            $_SESSION["seach_pe"] = $_POST["name"];
+        }else {
+            unset($_SESSION["seach_pe"]);
+        }
+        header("location:../start_end.php");
+    }
+
     if(isset($_POST["btn_add_pe"])) {
         $name = $_POST["name"];
         

@@ -191,101 +191,14 @@ $objUserAll = mysqli_query($con, $SQL);
         </aside><!-- /.right-side -->
     </div><!-- ./wrapper -->
 
-
+<div style="font-weight: 900;justify-content: space-between;"></div>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <!-- AdminLTE App -->
     <script src="js/AdminLTE/app2.js" type="text/javascript"></script>
+    <script src="js/printEmp.js" type="text/javascript"></script>
 
 
 </body>
 
 </html>
-
-<script>
-
-    
-    function listUser() {
-        var xhr = new XMLHttpRequest();
-        xhr.open ("GET", "server/server_list_emp.php?pass=hsr224");
-        xhr.onreadystatechange = responseXHR;
-        xhr.send(null);
-
-        function responseXHR(){
-            if ( xhr.readyState == 4 )
-            {
-                console.log(JSON.parse(xhr.responseText));
-                print(JSON.parse(xhr.responseText))
-            }
-        }
-
-    }
-
-
-    function print(listUser) {
-        var mywindow = window.open('', '', 'height=600,width=900');
-        
-        var genarataPrint = `
-            <html>
-                <head>
-                    <style>
-                    </style>
-                </head>
-                <body style="padding:0px;margin:0px">
-                    <div style="margin-top:10px; width: 100%">
-                        <h1>Ticket Sales</h1>
-                        <p>รายชื่อพนักงาน</p>
-                    </div>
-                    <table style="width:100%;text-align:center" border="1px" >
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>ไอดี</th>
-                                <th>อีเมลล์</th>
-                                <th>ชื่อ</th>
-                                <th>นามสกุล</th>
-                                <th>สถานะ</th>
-                                <th>เบอร์โทรติดต่อ</th>
-                            </tr>
-                        </thead>
-                        <tbody>  
-        `;
-        
-        for(let i = 0; i < listUser.length; i++) {
-            
-            genarataPrint += `
-                            <tr>
-                                <td>${i + 1}</td>
-                                <td>${listUser[i].u_id}</td>
-                                <td>${listUser[i].u_email}</td>
-                                <td>${listUser[i].u_first_name}</td>
-                                <td>${listUser[i].u_last_name}</td>
-                                <td>${listUser[i].u_role === 0? "ลูกจ้าง":"ผู้ดูแล"}</td>
-                                <td>${listUser[i].u_tel}</td>
-                            </tr>
-            `
-        }
-
-        genarataPrint += `
-                        </tbody>
-                    </table>
-                </body>
-            </html>
-        `;
-        
-        
-        mywindow.document.write(genarataPrint);
-        mywindow.document.close();
-        mywindow.focus();
-        mywindow.print();
-        
-        var mediaQueryList = mywindow.matchMedia('print');
-        
-        mediaQueryList.addEventListener("change",function(mql) {
-            if (!mql.matches) {
-                mywindow.close(); 
-            }
-        });
-    }
-
-</script>
