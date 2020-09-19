@@ -3,10 +3,11 @@
     // /TicketSales/view/employee.php
     $currentIndex = !strpos($url, "employee") 
                     && !strpos($url, "round_out") 
-                    && !strpos($url, "seat") 
+                    && !strpos($url, "pad") 
                     && !strpos($url, "ticket_sales")
                     && !strpos($url, "add_emp")
                     && !strpos($url, "start_end")
+                    && !strpos($url, "edit_profile")
 ?>
 <ul class="sidebar-menu">
     <?php if ($role == 1) { ?>
@@ -38,8 +39,8 @@
         </a>
     </li>
 
-    <li class="<?= strpos($url, "seat")? 'active':null?>">
-        <a href="seat.php">
+    <li class="<?= strpos($url, "pad")? 'active':null?>">
+        <a href="pad.php">
             <i class="fas fa-chair" style="font-size: 14px;"></i>
             <span> ที่นั้ง</span>
         </a>
@@ -76,8 +77,8 @@
         </a>
     </li>
 
-    <li class="<?= strpos($url, "seat")? 'active':null?>">
-        <a href="seat.php">
+    <li class="<?= strpos($url, "pad")? 'active':null?>">
+        <a href="pad.php">
             <i class="fas fa-chair" style="font-size: 14px;"></i>
             <span>ที่นั้ง</span>
         </a>

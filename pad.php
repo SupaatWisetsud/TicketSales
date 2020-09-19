@@ -69,7 +69,7 @@ $busQuery = mysqli_query($con, $SQL);
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
+                                    <a href="edit_profile.php" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>

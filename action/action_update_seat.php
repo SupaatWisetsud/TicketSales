@@ -14,14 +14,14 @@
         
  
         if (mysqli_query($con, $SQL)) {
-            header("location:../seat.php?bus_id={$bus_id}");
+            header("location:../pad.php?bus_id={$bus_id}");
         }else {
             echo "<script>
-            if(confirm('เกิดข้อผิดพลาดในการอัพเดท!')) location.replace('../seat.php?bus_id={$bus_id}');
-            else location.replace('../seat.php?bus_id={$bus_id}');
+            if(confirm('เกิดข้อผิดพลาดในการอัพเดท!')) location.replace('../pad.php?bus_id={$bus_id}');
+            else location.replace('../pad.php?bus_id={$bus_id}');
             </script>";
         }
     }else {
-        header("location:../seat.php?bus_id={$bus_id}");
+        header("location:../pad.php?bus_id={$bus_id}");
     }
 ?>

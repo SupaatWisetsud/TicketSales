@@ -20,6 +20,14 @@ $SQL = "SELECT * FROM tb_round_out
 
 $objQuery = mysqli_query($con, $SQL);
 
+$SQL = "SELECT * FROM tb_round_out 
+        INNER JOIN tb_place_start ON tb_round_out.ro_place_start = tb_place_start.ps_id 
+        INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id
+        GROUP BY ro_place_start, ro_place_end";
+
+$groupRoundQuery = mysqli_query($con, $SQL);
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -74,7 +82,7 @@ $objQuery = mysqli_query($con, $SQL);
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
+                                    <a href="edit_profile.php" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
@@ -376,10 +384,17 @@ $objQuery = mysqli_query($con, $SQL);
                 <div class="add_ro" style="margin-bottom: 5px;">
                     <button id="myBtn" class="btn btn-success"> <i class="fas fa-plus"></i> เพิ่มรอบรถ</button>
                     
-                    <button class="btn btn-warning">
+                    <button class="btn btn-warning" onclick="listRound()">
                         <i class="fas fa-print"></i>
                     </button>
                 </div>
+
+                <?php 
+                    $rountResult = mysqli_fetch_all($objQuery, MYSQLI_ASSOC);
+                    while($rowGroup = mysqli_fetch_assoc($groupRoundQuery)):
+                ?>
+                <!-- table round -->
+                <h4><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
                 <table class="table table-striped text-center" style="margin-top: 15px;">
                     <thead class="thead-dark" style="background-color: #5DADE2;color:white">
                         <tr>
@@ -397,7 +412,8 @@ $objQuery = mysqli_query($con, $SQL);
                     <tbody>
                         <?php
                         $i = 1;
-                        while ($row = mysqli_fetch_assoc($objQuery)) :
+                        foreach ($rountResult as $row) {
+                            if($row["ro_place_start"] == $rowGroup["ro_place_start"]&&$row["ro_place_end"] == $rowGroup["ro_place_end"]) {
                         ?>
                             <tr>
                                 <th scope="row"><?= $i ?></th>
@@ -419,12 +435,17 @@ $objQuery = mysqli_query($con, $SQL);
                                 </td>
                             </tr>
                         <?php
+                            }
                             $i++;
-                        endwhile;
+                        }
                         ?>
                     </tbody>
                 </table>
-
+                <!-- end table round -->
+                <?php 
+                    endwhile;
+                ?>
+                        
             </section><!-- /.content -->
         </aside><!-- /.right-side -->
     </div><!-- ./wrapper -->
@@ -459,4 +480,90 @@ $objQuery = mysqli_query($con, $SQL);
         modal.style.display = "none";
     }
     };
+</script>
+
+<script>
+      function listRound() {
+        var xhr = new XMLHttpRequest();
+        xhr.open ("GET", "server/server_list_round_out.php?pass=hsr224");
+        xhr.onreadystatechange = responseXHR;
+        xhr.send(null);
+
+        function responseXHR(){
+            if ( xhr.readyState == 4 )
+            {
+                console.log(JSON.parse(xhr.responseText));
+                print(JSON.parse(xhr.responseText))
+            }
+        }
+
+    }
+
+
+    function print(listUser) {
+        var mywindow = window.open('', '', 'height=600,width=900');
+        
+        var genarataPrint = `
+            <html>
+                <head>
+                    <style>
+                    </style>
+                </head>
+                <body style="padding:0px;margin:0px">
+                    <div style="margin-top:10px; width: 100%">
+                        <h1>Ticket Sales</h1>
+                        <p>รายการรอบรถ</p>
+                    </div>
+                    <table style="width:100%;text-align:center" border="1px" >
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>ไอดี</th>
+                                <th>ต้นทาง</th>
+                                <th>ปลายทาง</th>
+                                <th>เวลาเดินทาง</th>
+                                <th>เวลาถึง</th>
+                                <th>รถ</th>
+                                <th>ราคา</th>
+                            </tr>
+                        </thead>
+                        <tbody>  
+        `;
+        
+        for(let i = 0; i < listUser.length; i++) {
+            
+            // genarataPrint += `
+            //                 <tr>
+            //                     <td>${i + 1}</td>
+            //                     <td>${listUser[i].u_id}</td>
+            //                     <td>${listUser[i].u_email}</td>
+            //                     <td>${listUser[i].u_first_name}</td>
+            //                     <td>${listUser[i].u_last_name}</td>
+            //                     <td>${listUser[i].u_role === 0? "ลูกจ้าง":"ผู้ดูแล"}</td>
+            //                     <td>${listUser[i].u_tel}</td>
+            //                 </tr>
+            // `
+        }
+
+        genarataPrint += `
+                        </tbody>
+                    </table>
+                </body>
+            </html>
+        `;
+        
+        
+        mywindow.document.write(genarataPrint);
+        mywindow.document.close();
+        mywindow.focus();
+        mywindow.print();
+        
+        var mediaQueryList = mywindow.matchMedia('print');
+        
+        mediaQueryList.addEventListener("change",function(mql) {
+            if (!mql.matches) {
+                mywindow.close(); 
+            }
+        });
+    }
 </script>

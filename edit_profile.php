@@ -111,66 +111,57 @@ $user = mysqli_fetch_assoc($objQuery);
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             <section class="content-header" style="display: flex;">
-                <a href="employee.php"><i class="fas fa-arrow-left" style="margin-right: 5px; font-size: 24px; color:#000"></i></a>
                 <h1>
-                    <i class="fas fa-users"></i> เพิ่มลูกจ้าง
+                    <i class="fas fa-users"></i> โปรไฟล์
                 </h1>
             </section>
 
             <!-- Main content -->
             <section class="content container content_add_emp">
-                <form class="form_add_emp" action="action/action_add_emp.php" method="POST">
-                    <div class="form_title"><i class="fab fa-wpforms"></i> กรอกข้อมูลลูกจ้าง</div>
+                <form class="form_add_emp" action="action/action_update_profile.php" method="POST">
+                    <div class="form_title"><i class="fab fa-wpforms"></i> ข้อมูลโปรไฟล์</div>
                     <div class="form-group">
                         <label for="email"> <i class="fas fa-envelope-square"></i> อีเมลล์</label>
-                        <input type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" required autofocus>
+                        <input type="email" value="<?= $user['u_email'] ?>" name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" required autofocus>
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div class="form-group">
                         <label for="password"> <i class="fas fa-key"></i> รหัสผ่าน</label>
-                        <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        <input type="password" name="password" class="form-control" placeholder="Password">
                     </div>
                     <div class="form-group">
                         <label for="confirm_password"> <i class="fas fa-unlock-alt"></i> ยืนยันรหัสผ่าน </label>
-                        <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+                        <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" 
                     </div>
 
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label for="first_name"><i class="fas fa-signature"></i> ชื่อ</label>
-                                <input type="text" name="first_name" class="form-control" placeholder="First Name" required>
+                                <input type="text" value="<?= $user['u_first_name'] ?>" name="first_name" class="form-control" placeholder="First Name" required>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
                                 <label for="last_name"><i class="fas fa-file-signature"></i> นามสกุล</label>
-                                <input type="text" name="last_name" class="form-control" placeholder="Last Name" required>
+                                <input type="text" value="<?= $user['u_last_name'] ?>" name="last_name" class="form-control" placeholder="Last Name" required>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="first_name"><i class="fas fa-shield-alt"></i> สิทธิ์การใช้งาน</label>
-                        <select class="form-control" name="role">
-                            <option value="0">ลูกจ้าง</option>
-                            <option value="1">ผู้ดูแล</option>
-                        </select>
                     </div>
 
                     <div class="form-group">
                         <label for="tel"><i class="fas fa-tty"></i> เบอร์โทรติดต่อ</label>
-                        <input type="text" name="tel" class="form-control" maxlength="10" placeholder="Tel" required>
+                        <input type="text" value="<?= $user['u_tel'] ?>" name="tel" class="form-control" maxlength="10" placeholder="Tel" required>
                     </div>
                     
                     <div class="text-center">
                         <button type="submit" name="add_emp_submit" class="btn btn-primary">
                             <i class="fas fa-plus"></i>
-                            เพิ่ม
+                            แก้ไข
                         </button>
                         <button type="reset" class="btn btn-danger">
                             <i class="fas fa-undo-alt"></i>
-                            รีเซ็ต
+                            ยกเลิก
                         </button>
                     </div>
                 </form>
@@ -183,10 +174,7 @@ $user = mysqli_fetch_assoc($objQuery);
 
 
     <!-- jQuery 2.0.2 -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <!-- jQuery UI 1.10.3 -->
-    <script src="js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-    <!-- Bootstrap -->
+    <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <!-- AdminLTE App -->
     <script src="js/AdminLTE/app2.js" type="text/javascript"></script>

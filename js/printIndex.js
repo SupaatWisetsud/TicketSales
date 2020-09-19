@@ -1,15 +1,34 @@
 function printDiv(divName) {
+    let set_seat = document.getElementsByClassName("set_select_seat_id");
+    let set_seat_name = document.getElementsByClassName("set_select_seat_name");
+
+    let ro_id = document.getElementById("txt_ro_id").value;
+    let user_id = document.getElementById("txt_user_id").value;
+    let price = document.getElementById("txt_price").value;
+    let bus_id = document.getElementById("txt_bus_id").value;
+    let bus_name = document.getElementById("txt_bus_name").value;
+    let time_start = document.getElementById("txt_time_start").value;
+    let time_end = document.getElementById("txt_time_end").value;
+    let ps_name = document.getElementById("txt_ps_name").value;
+    let pe_name = document.getElementById("txt_pe_name").value;
+    let sale_id = document.getElementById("txt_sale_id").value;
+
+    let date = new Date();
 
     var mywindow = window.open('', '', 'height=600,width=900');
-
+        
     var genarataPrint = `
         <html>
             <head>
                 <style>
                 </style>
             </head>
-            <body style="padding:25px">
-                <div style="display:flex;justify-content: space-between;width:60%">
+            <body style="padding:0px;margin:0px">
+        `
+        for(let i = 0; i < set_seat.length; i++) {
+            genarataPrint += 
+            `<div style="border-top: 1px dotted #333;border-bottom: 1px dotted #333;margin-bottom:2px">
+                <div style="display:flex;justify-content: space-between;width:100%">
                     <div 
                         style="
                             display: flex;
@@ -20,11 +39,11 @@ function printDiv(divName) {
                         <h1 style="margin:0">Ticket Sales</h1>
                     </div>
                     <div>
-                        <h4>รหัสตั๋ว 0125222</h4>
-                        <h4>วันที่ 01/10/2563</h4>
+                        <h4>รหัสตั๋ว ${parseInt(sale_id) + 1 + i}</h4>
+                        <h4>วันที่ ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear() + 543 }</h4>
                     </div>
                 </div>
-                <table style="width:60%;text-align: center;">
+                <table style="width:100%;text-align: center;" border="1px">
                     <tr style="background-color: slategrey;">
                         <th>ต้นทาง</th>
                         <th>เวลาออกเดินทาง</th>
@@ -32,20 +51,36 @@ function printDiv(divName) {
                         <th>เวลาเดินทางถึง</th>
                     </tr>
                     <tr style="margin-top:5px">
-                        <td>บุรีรัมย์</td>
-                        <td>08:30</td>
-                        <td>ร้อยเอ็ด</td>
-                        <td>12:30</td>
+                        <td>${ps_name}</td>
+                        <td>${time_start}</td>
+                        <td>${pe_name}</td>
+                        <td>${time_end}</td>
                     </tr>
                 </table>
-                <div style="display:flex;justify-content: space-between;width:60%;padding-left: 15px;padding-right: 15px;box-sizing: border-box;border-top: 1px solid">
-                    <p style="font-weight: bold;">หมายเลขที่นั้ง</p>
-                    <p>A5</p>
+                
+                <div style="display:flex;justify-content: space-between;width:100%;padding-left: 15px;padding-right: 15px;box-sizing: border-box;border-top: 1px solid">
+                    <p style="font-weight: bold;">ประเภทรถ</p>
+                    <p>${bus_name} ฿</p>
                 </div>
-                <div style="display:flex;justify-content: space-between;width:60%;padding-left: 15px;padding-right: 15px;box-sizing: border-box;">
+
+                <div style="display:flex;justify-content: space-between;width:100%;padding-left: 15px;padding-right: 15px;box-sizing: border-box;">
+                    <p style="margin-top:0px; font-weight: bold;">รหัสรถ</p>
+                    <p style="margin-top:0px;">${bus_id} ฿</p>
+                </div>
+
+                <div style="display:flex;justify-content: space-between;width:100%;padding-left: 15px;padding-right: 15px;box-sizing: border-box;">
+                    <p style="margin-top:0px; font-weight: bold;">หมายเลขที่นั้ง</p>
+                    <p style="margin-top:0px;">${set_seat_name[i].value}</p>
+                </div>
+
+                <div style="display:flex;justify-content: space-between;width:100%;padding-left: 15px;padding-right: 15px;box-sizing: border-box;">
                     <p style="margin-top:0px; font-weight: bold;">ราคา</p>
-                    <p style="margin-top:0px;">120 ฿</p>
+                    <p style="margin-top:0px;">${price} ฿</p>
                 </div>
+            </div>`
+        }
+
+        `
             </body>
         </html>
     `
@@ -61,7 +96,7 @@ function printDiv(divName) {
     mediaQueryList.addEventListener("change",function(mql) {
         if (!mql.matches) {
             mywindow.close(); 
-            unDataToDB();
+            unDataToDB(ro_id, user_id, price, bus_id);
         }
     });
 }
@@ -72,19 +107,14 @@ function sale(divName){
     }
 }
 
-function unDataToDB() {
-    let ro_id = document.getElementById("txt_ro_id").value;
-    let user_id = document.getElementById("txt_user_id").value;
-    let select_seat = document.getElementById("txt_select_seat").value;
-    let price = document.getElementById("txt_price").value;
-    let bus_id = document.getElementById("txt_bus_id").value;
+function unDataToDB(ro_id, user_id, price, bus_id) {
 
     var xhr = new XMLHttpRequest();
     xhr.open ( "POST", "server/server_add_sales.php");
     xhr.onreadystatechange = responseXHR;
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    let messageSend = `id_round=${ro_id}&id_emp=${user_id}&id_seat=${select_seat}&price=${price}&pass=hsr224`;
+    let messageSend = `id_round=${ro_id}&id_emp=${user_id}&price=${price}&pass=hsr224`;
 
     xhr.send(messageSend);
 

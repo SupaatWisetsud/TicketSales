@@ -10,12 +10,12 @@
         $SQL = "INSERT INTO tb_bus (b_name) VALUE ('{$name}') ";
 
         $objQuert = mysqli_query($con, $SQL);
-        if ($objQuert) header("location:../seat.php");
+        if ($objQuert) header("location:../pad.php");
         else echo "<script>
-                    if(confirm('เกิดข้อผิดพลาดในการเพิ่มข้อมูล!')) location.replace('../seat.php');
-                    else location.replace('../seat.php');
+                    if(confirm('เกิดข้อผิดพลาดในการเพิ่มข้อมูล!')) location.replace('../pad.php');
+                    else location.replace('../pad.php');
                 </script>";
     }else {
-        header("location:../seat.php");
+        header("location:../pad.php");
     }
 ?>

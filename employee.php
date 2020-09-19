@@ -33,7 +33,6 @@ $objUserAll = mysqli_query($con, $SQL);
     <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
 
-
 </head>
 
 <body class="skin-blue">
@@ -71,7 +70,7 @@ $objUserAll = mysqli_query($con, $SQL);
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
+                                    <a href="edit_profile.php" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
@@ -129,10 +128,11 @@ $objUserAll = mysqli_query($con, $SQL);
                             <i class="fas fa-plus"></i>
                             เพิ่มลูกจ้าง
                         </button>
-                        <button class="btn btn-warning">
-                            <i class="fas fa-print"></i>
-                        </button>
                     </a>
+                    <!-- print -->
+                    <button class="btn btn-warning" onclick="listUser()">
+                        <i class="fas fa-print"></i>
+                    </button>
                 </div>
                 <div class="container">
                     <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
@@ -201,3 +201,91 @@ $objUserAll = mysqli_query($con, $SQL);
 </body>
 
 </html>
+
+<script>
+
+    
+    function listUser() {
+        var xhr = new XMLHttpRequest();
+        xhr.open ("GET", "server/server_list_emp.php?pass=hsr224");
+        xhr.onreadystatechange = responseXHR;
+        xhr.send(null);
+
+        function responseXHR(){
+            if ( xhr.readyState == 4 )
+            {
+                console.log(JSON.parse(xhr.responseText));
+                print(JSON.parse(xhr.responseText))
+            }
+        }
+
+    }
+
+
+    function print(listUser) {
+        var mywindow = window.open('', '', 'height=600,width=900');
+        
+        var genarataPrint = `
+            <html>
+                <head>
+                    <style>
+                    </style>
+                </head>
+                <body style="padding:0px;margin:0px">
+                    <div style="margin-top:10px; width: 100%">
+                        <h1>Ticket Sales</h1>
+                        <p>รายชื่อพนักงาน</p>
+                    </div>
+                    <table style="width:100%;text-align:center" border="1px" >
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>ไอดี</th>
+                                <th>อีเมลล์</th>
+                                <th>ชื่อ</th>
+                                <th>นามสกุล</th>
+                                <th>สถานะ</th>
+                                <th>เบอร์โทรติดต่อ</th>
+                            </tr>
+                        </thead>
+                        <tbody>  
+        `;
+        
+        for(let i = 0; i < listUser.length; i++) {
+            
+            genarataPrint += `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${listUser[i].u_id}</td>
+                                <td>${listUser[i].u_email}</td>
+                                <td>${listUser[i].u_first_name}</td>
+                                <td>${listUser[i].u_last_name}</td>
+                                <td>${listUser[i].u_role === 0? "ลูกจ้าง":"ผู้ดูแล"}</td>
+                                <td>${listUser[i].u_tel}</td>
+                            </tr>
+            `
+        }
+
+        genarataPrint += `
+                        </tbody>
+                    </table>
+                </body>
+            </html>
+        `;
+        
+        
+        mywindow.document.write(genarataPrint);
+        mywindow.document.close();
+        mywindow.focus();
+        mywindow.print();
+        
+        var mediaQueryList = mywindow.matchMedia('print');
+        
+        mediaQueryList.addEventListener("change",function(mql) {
+            if (!mql.matches) {
+                mywindow.close(); 
+            }
+        });
+    }
+
+</script>

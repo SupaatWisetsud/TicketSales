@@ -17,18 +17,19 @@ $user = mysqli_fetch_assoc($objQuery);
 $SQL = "SELECT * FROM tb_round_out 
             INNER JOIN tb_bus ON tb_round_out.ro_bus = tb_bus.b_id
             INNER JOIN tb_place_start ON tb_round_out.ro_place_start = tb_place_start.ps_id 
-            INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id";
-
+            INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id ORDER BY ro_time_start";
 
 if (isset($_GET["btn_search"])) {
     $start = $_GET["search_start"];
     $end = $_GET["search_end"];
-
-    $SQL = "SELECT * FROM tb_round_out 
+    
+    if (trim($start) != "0" && trim($end) != "0") {
+        $SQL = "SELECT * FROM tb_round_out 
             INNER JOIN tb_bus ON tb_round_out.ro_bus = tb_bus.b_id
             INNER JOIN tb_place_start ON tb_round_out.ro_place_start = tb_place_start.ps_id 
             INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id 
             WHERE ro_place_start = '{$start}' && ro_place_end = '{$end}' ";
+    }
     // echo $SQL;
     // exit;
 }
@@ -58,6 +59,28 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
 $SQL = "SELECT COUNT(*) as bs_count_round, bs_round_out FROM `tb_book_seat` GROUP BY bs_round_out";
 $count_round = mysqli_query($con, $SQL);
 
+
+$SQL = "SELECT * FROM tb_round_out 
+        INNER JOIN tb_place_start ON tb_round_out.ro_place_start = tb_place_start.ps_id 
+        INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id
+        GROUP BY ro_place_start, ro_place_end";
+
+if (isset($_GET["btn_search"])) {
+    $start = $_GET["search_start"];
+    $end = $_GET["search_end"];
+    if (trim($start) != "0" && trim($end) != "0") {
+        $SQL = "SELECT * FROM tb_round_out 
+                INNER JOIN tb_place_start ON tb_round_out.ro_place_start = tb_place_start.ps_id 
+                INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id
+                WHERE ro_place_start = '{$start}' && ro_place_end = '{$end}' 
+                GROUP BY ro_place_start, ro_place_end";
+    }
+}
+$groupPlaceQuery = mysqli_query($con, $SQL);
+
+if(isset($_GET["clean_seant"])){
+    unset($_SESSION["set_select_seat"]);
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -79,12 +102,30 @@ $count_round = mysqli_query($con, $SQL);
 
     <?php 
         if(isset($_GET['ro_id']) && isset($_GET['select_seat']) && isset($_GET['price']) && isset($_GET['bus_id'])){
+
+            $SQL = "SELECT * FROM tb_round_out 
+                    INNER JOIN tb_place_start ON tb_round_out.ro_place_start = tb_place_start.ps_id 
+                    INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id
+                    INNER JOIN tb_bus ON tb_round_out.ro_bus = tb_bus.b_id WHERE ro_id = {$_GET['ro_id']}";
+            
+            $sale_sendQuery = mysqli_query($con, $SQL);
+            $sale_sendResult = mysqli_fetch_assoc($sale_sendQuery);
+
+            $SQL = "SELECT * FROM tb_sales ORDER BY sale_id DESC LIMIT 1";
+            $sale_idQuery = mysqli_query($con, $SQL);
+            $sale_idResult = mysqli_fetch_assoc($sale_idQuery);
+        
             echo "
-            <input type='hidden' id='txt_ro_id' value='{$_GET['ro_id']}'>
+            <input type='hidden' id='txt_ro_id' value='{$sale_sendResult['ro_id']}'>
             <input type='hidden' id='txt_user_id' value='{$_SESSION['user_id']}'>
-            <input type='hidden' id='txt_select_seat' value={$_GET['select_seat']}'>
-            <input type='hidden' id='txt_price' value='{$_GET['price']}'>
-            <input type='hidden' id='txt_bus_id' value='{$_GET['bus_id']}'>
+            <input type='hidden' id='txt_price' value='{$sale_sendResult['ro_price']}'>
+            <input type='hidden' id='txt_bus_id' value='{$sale_sendResult['b_id']}'>
+            <input type='hidden' id='txt_bus_name' value='{$sale_sendResult['b_name']}'>
+            <input type='hidden' id='txt_time_start' value='{$sale_sendResult['ro_time_start']}'>
+            <input type='hidden' id='txt_time_end' value='{$sale_sendResult['ro_time_end']}'>
+            <input type='hidden' id='txt_ps_name' value='{$sale_sendResult['ps_name']}'>
+            <input type='hidden' id='txt_pe_name' value='{$sale_sendResult['pe_name']}'>
+            <input type='hidden' id='txt_sale_id' value='{$sale_idResult['sale_id']}'>
             ";
         }
     ?>
@@ -123,7 +164,7 @@ $count_round = mysqli_query($con, $SQL);
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
+                                    <a href="edit_profile.php" class="btn btn-default btn-flat"><i class="fas fa-male"></i> โปรไฟล์</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="logout.php" class="btn btn-default btn-flat"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
@@ -217,11 +258,12 @@ $count_round = mysqli_query($con, $SQL);
                                         ?>
                                     </select>
                                 </div>
+                                <input type="hidden" name="clean_seant">
                                 <div class="col-md-3">
                                     <button type="submit" name="btn_search" class="btn btn-primary">
                                         <i class="fas fa-search" style="font-size: 14px;"></i> ค้นหา
                                     </button>
-                                    <a href="index.php" class="btn btn-warning">
+                                    <a href="index.php?clean_seant" class="btn btn-warning">
                                         <i class="fas fa-undo-alt" style="font-size: 14px;"></i>
                                     </a>
                                 </div>
@@ -233,61 +275,81 @@ $count_round = mysqli_query($con, $SQL);
                 <div class="row">
                     <div class="col-md-6">
                         <div style="overflow-x: auto; margin-top: 15px;">
-                            <table class="table text-center" >
-                                <thead style="background-color: #5DADE2; color: white;">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">ต้นทาง</th>
-                                        <th scope="col">เวลาออก</th>
-                                        <th scope="col">ปลายทาง</th>
-                                        <th scope="col">เวลาถึง</th>
-                                        <th scope="col">รถ</th>
-                                        <th scope="col">ราคา</th>
-                                        <th scope="col">สถานะ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $i = 1;
-                                    while ($row = mysqli_fetch_assoc($rountQuery)) :
-                                        $SQL = "SELECT COUNT(*) FROM tb_seat WHERE seat_bus = {$row['b_id']}";
-                                        $count_seat_in_bus = mysqli_fetch_row(mysqli_query($con, $SQL))[0];
+                                <?php 
+                                    
+                                    $rountResult = mysqli_fetch_all($rountQuery, MYSQLI_ASSOC);
+                                    while($rowGroup = mysqli_fetch_assoc($groupPlaceQuery)){
+                                ?>
+                                    <h4><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
+                                            
+                                    <table class="table text-center" >
+                                        <thead style="background-color: #5DADE2; color: white;">
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">ต้นทาง</th>
+                                                <th scope="col">เวลาออก</th>
+                                                <th scope="col">ปลายทาง</th>
+                                                <th scope="col">เวลาถึง</th>
+                                                <th scope="col">รถ</th>
+                                                <th scope="col">ราคา</th>
+                                                <th scope="col">สถานะ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                                $i = 1;
+                                               
+                                                foreach ($rountResult as $row) {
+                                                    // print_r($row);
+                                                    // exit;
+                                                    if($row["ro_place_start"] == $rowGroup["ro_place_start"]&&$row["ro_place_end"] == $rowGroup["ro_place_end"]) {
+                                                        
+                                                        $SQL = "SELECT COUNT(*) FROM tb_seat WHERE seat_bus = {$row['b_id']}";
+                                                        $count_seat_in_bus = mysqli_fetch_row(mysqli_query($con, $SQL))[0];
+                                                        
+                                                        $check_full_seat = false;
+                                                        while($check_seat = mysqli_fetch_assoc($count_round)){
+                                                            if(
+                                                                $check_seat["bs_round_out"] == $row["ro_id"] 
+                                                                && $check_seat["bs_count_round"] == $count_seat_in_bus){
+                                                                $check_full_seat = true;
+                                                            }
+                                                        }
+
+                                            ?>
+
+                                                    <tr class="<?= $_GET['ro_id'] == $row['ro_id'] ? 'select-row-seat' : null ?>">
+                                                        <th scope="row"><?= $i ?></th>
+                                                        <td><?= $row["ps_name"] ?></td>
+                                                        <td><?= $row["ro_time_start"] ?></td>
+                                                        <td><?= $row["pe_name"] ?></td>
+                                                        <td><?= $row["ro_time_end"] ?></td>
+                                                        <td><?= $row["b_name"] ?></td>
+                                                        <td><?= $row["ro_price"] ?></td>
+                                                        <td><p class="label <?= $check_full_seat? 'label-danger':'label-success'?>"><?= $check_full_seat? 'เต็ม!':'ว่าง' ?></p></td>
+                                                        <td>
+                                                            <?php
+                                                            $pach_search = isset($_GET["btn_search"]) ? "&search_start={$_GET['search_start']}&search_end={$_GET['search_end']}&btn_search=" : null
+                                                            ?>
+                                                            <a href="<?= "?clean_seant&ro_id=". $row['ro_id'] . "&bus_id=" . $row['b_id'] . "&price=" . $row["ro_price"] ?><?= $pach_search ?>">
+                                                                <button class="btn btn-primary">
+                                                                    <i class="far fa-check-circle" style="font-size: 15px;"></i>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                            <?php
+                                                    }
+                                                    $i++;
+                                                }
+                                            ?>
                                         
-                                        $check_full_seat = false;
-                                        while($check_seat = mysqli_fetch_assoc($count_round)){
-                                            if(
-                                                $check_seat["bs_round_out"] == $row["ro_id"] 
-                                                && $check_seat["bs_count_round"] == $count_seat_in_bus){
-                                                $check_full_seat = true;
-                                            }
-                                        }
-                                    ?>
-                                        <tr class="<?= $_GET['ro_id'] == $row['ro_id'] ? 'select-row-seat' : null ?>">
-                                            <th scope="row"><?= $i ?></th>
-                                            <td><?= $row["ps_name"] ?></td>
-                                            <td><?= $row["ro_time_start"] ?></td>
-                                            <td><?= $row["pe_name"] ?></td>
-                                            <td><?= $row["ro_time_end"] ?></td>
-                                            <td><?= $row["b_name"] ?></td>
-                                            <td><?= $row["ro_price"] ?></td>
-                                            <td><p class="label <?= $check_full_seat? 'label-danger':'label-success'?>"><?= $check_full_seat? 'เต็ม!':'ว่าง' ?></p></td>
-                                            <td>
-                                                <?php
-                                                $pach_search = isset($_GET["btn_search"]) ? "&search_start={$_GET['search_start']}&search_end={$_GET['search_end']}&btn_search=" : null
-                                                ?>
-                                                <a href="<?= "?ro_id=" . $row['ro_id'] . "&bus_id=" . $row['b_id'] . "&price=" . $row["ro_price"] ?><?= $pach_search ?>">
-                                                    <button class="btn btn-primary">
-                                                        <i class="far fa-check-circle" style="font-size: 15px;"></i>
-                                                    </button>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    <?php
-                                        $i++;
-                                    endwhile;
-                                    ?>
-                                </tbody>
-                            </table>
+                                        </tbody>
+                                    </table>
+                                <?php
+                                    };
+                                ?>
+                               
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -301,8 +363,17 @@ $count_round = mysqli_query($con, $SQL);
 
                                     if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
                                         $bus_id = $_GET["bus_id"];
-                                        $select_seat = 0;
-                                        if (isset($_GET["select_seat"])) $select_seat = $_GET["select_seat"];
+                                        
+                                        if (isset($_GET["select_seat"])) {
+                                            if(!isset($_SESSION["set_select_seat"][$_GET["select_seat"]])){
+                                                $_SESSION["set_select_seat"][$_GET["select_seat"]]["id"] = $_GET["select_seat"];
+                                                $_SESSION["set_select_seat"][$_GET["select_seat"]]["name"] = $_GET["seat_name"];
+                                            }else {
+                                                unset($_SESSION["set_select_seat"][$_GET["select_seat"]]);
+                                            }
+                                            
+                                        };
+                                        
 
                                         $SQL = "SELECT * FROM tb_seat WHERE seat_bus = {$bus_id} ";
                                         $seatQuery = mysqli_query($con, $SQL);
@@ -314,7 +385,7 @@ $count_round = mysqli_query($con, $SQL);
                                         $bookSeatResult = mysqli_fetch_all($bookSeatQuery, MYSQLI_ASSOC);
 
 
-                                        while ($row = mysqli_fetch_assoc($seatQuery)) :
+                                        while ($row = mysqli_fetch_assoc($seatQuery)) {
 
                                             $book_seat_status = false;
 
@@ -325,25 +396,36 @@ $count_round = mysqli_query($con, $SQL);
                                             }
 
                                             if ($book_seat_status) {
-                                    ?>
+                                    
+                                                echo "<div class='col-md-3 col-sm-6 box-seat-item'>
+                                                        <img src='svg/seat2.svg' class='box-seat-item-image status-red'>
+                                                        <p class='label label-danger' style='margin-top: 8px;'>{$row["seat_name"]}</p>
+                                                    </div>";
                                             
-                                                
-                                                <div class=" col-md-3 col-sm-6 box-seat-item">
-                                                    <img src="svg/seat2.svg" class="box-seat-item-image status-red">
-                                                    <p class="label label-danger" style="margin-top: 8px;"><?= $row["seat_name"] ?></p>
-                                                </div>
-                                            <?php 
                                             } else { 
-                                            ?>
-                                                <a href="<?= "?ro_id=" . $_GET["ro_id"] . "&bus_id=" . $_GET["bus_id"] . "&select_seat=" . $row["seat_id"] . "&price=" . $_GET["price"] . $pach_search ?>">
-                                                    <div class="col-md-3 col-sm-6 box-seat-item <?= $select_seat == $row["seat_id"] ? 'select-box-seat' : null ?>">
-                                                        <img src="svg/seat2.svg" class="box-seat-item-image">
-                                                        <p class="label label-success" style="margin-top: 8px;" ><?= $row["seat_name"] ?></p>
-                                                    </div>
-                                                </a>
-                                    <?php
+
+                                                if(isset($_SESSION["set_select_seat"][$row["seat_id"]])) {
+                                                    echo "
+                                                    <a href='?ro_id={$_GET['ro_id']}&bus_id={$_GET['bus_id']}&select_seat={$row['seat_id']}&price={$_GET['price']}$pach_search'>
+                                                        <div class='col-md-3 col-sm-6 box-seat-item select-box-seat'> 
+                                                            <img src='svg/seat2.svg' class='box-seat-item-image'>
+                                                            <p class='label label-success' style='margin-top: 8px;' >{$row['seat_name']}</p>
+                                                        </div>
+                                                    </a>";
+                                                }else {
+                                                    echo "
+                                                    <a href='?ro_id={$_GET['ro_id']}&bus_id={$_GET['bus_id']}&seat_name={$row['seat_name']}&select_seat={$row['seat_id']}&price={$_GET['price']}$pach_search'>
+                                                        <div class='col-md-3 col-sm-6 box-seat-item'> 
+                                                            <img src='svg/seat2.svg' class='box-seat-item-image'>
+                                                            <p class='label label-success' style='margin-top: 8px;' >{$row['seat_name']}</p>
+                                                        </div>
+                                                    </a>";
+                                                }
+                                                
+                                                // $select_seat == $row["seat_id"] ? 'select-box-seat' : null
+
                                             }
-                                        endwhile;
+                                        };
                                     } else {
                                     ?>
                                         <div class=" text-center" style="display: flex; justify-content: center; align-items: center;height: 350px;">
@@ -378,7 +460,7 @@ $count_round = mysqli_query($con, $SQL);
                                     <i class="fas fa-clipboard-check" style="font-size: 14px;color:white;"></i>
                                     ขายตั๋ว
                                 </button>
-                                <a href="index.php">
+                                <a href="index.php?clean_seant">
                                     <button class="btn btn-danger">
                                         <i class="far fa-window-close" style="font-size: 14px;color:white;"></i>
                                         ยกเลิก
@@ -395,7 +477,16 @@ $count_round = mysqli_query($con, $SQL);
         </aside><!-- /.right-side -->
 
     </div><!-- ./wrapper -->
-
+    <?php 
+        if(isset($_SESSION["set_select_seat"])) {
+            foreach ($_SESSION["set_select_seat"] as $value) {
+                echo "
+                <input type='hidden' class='set_select_seat_id' value='{$value['id']}'>
+                <input type='hidden' class='set_select_seat_name' value='{$value['name']}'>
+                ";
+            }
+        }
+    ?>
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/AdminLTE/app2.js" type="text/javascript"></script>

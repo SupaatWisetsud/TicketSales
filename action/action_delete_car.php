@@ -10,11 +10,11 @@
     $SQL = "DELETE FROM tb_bus WHERE b_id = '{$id}'";
 
     if (mysqli_query($con, $SQL)) {
-        header("location:../seat.php");
+        header("location:../pad.php");
     }else {
         echo "<script>
-                if(confirm('เกิดข้อผิดพลาดในการลบ!')) location.replace('../seat.php');
-                else location.replace('../seat.php');
+                if(confirm('เกิดข้อผิดพลาดในการลบ!')) location.replace('../pad.php');
+                else location.replace('../pad.php');
             </script>";
     }
 ?>

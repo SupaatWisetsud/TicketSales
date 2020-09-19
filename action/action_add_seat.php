@@ -12,13 +12,13 @@
 
         $objQuert = mysqli_query($con, $SQL);
 
-        if ($objQuert) header("location:../seat.php?bus_id={$bus_id}");
+        if ($objQuert) header("location:../pad.php?bus_id={$bus_id}");
         else echo "<script>
-                    if(confirm('เกิดข้อผิดพลาดในการเพิ่มข้อมูล!')) location.replace('../seat.php?bus_id={$bus_id}');
-                    else location.replace('../seat.php?bus_id={$bus_id}');
+                    if(confirm('เกิดข้อผิดพลาดในการเพิ่มข้อมูล!')) location.replace('../pad.php?bus_id={$bus_id}');
+                    else location.replace('../pad.php?bus_id={$bus_id}');
                 </script>";
  
     }else {
-        header("location:../seat.php?bus_id={$bus_id}");
+        header("location:../pad.php?bus_id={$bus_id}");
     }
 ?>
