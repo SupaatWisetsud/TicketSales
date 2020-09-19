@@ -114,7 +114,10 @@ if(isset($_GET["clean_seant"])){
             $SQL = "SELECT * FROM tb_sales ORDER BY sale_id DESC LIMIT 1";
             $sale_idQuery = mysqli_query($con, $SQL);
             $sale_idResult = mysqli_fetch_assoc($sale_idQuery);
-        
+            
+            if(!isset($sale_idResult['sale_id'])) {
+                $sale_idResult['sale_id'] = 0;
+            }
             echo "
             <input type='hidden' id='txt_ro_id' value='{$sale_sendResult['ro_id']}'>
             <input type='hidden' id='txt_user_id' value='{$_SESSION['user_id']}'>
@@ -122,7 +125,6 @@ if(isset($_GET["clean_seant"])){
             <input type='hidden' id='txt_bus_id' value='{$sale_sendResult['b_id']}'>
             <input type='hidden' id='txt_bus_name' value='{$sale_sendResult['b_name']}'>
             <input type='hidden' id='txt_time_start' value='{$sale_sendResult['ro_time_start']}'>
-            <input type='hidden' id='txt_time_end' value='{$sale_sendResult['ro_time_end']}'>
             <input type='hidden' id='txt_ps_name' value='{$sale_sendResult['ps_name']}'>
             <input type='hidden' id='txt_pe_name' value='{$sale_sendResult['pe_name']}'>
             <input type='hidden' id='txt_sale_id' value='{$sale_idResult['sale_id']}'>
@@ -290,7 +292,6 @@ if(isset($_GET["clean_seant"])){
                                                 <th scope="col">ต้นทาง</th>
                                                 <th scope="col">เวลาออก</th>
                                                 <th scope="col">ปลายทาง</th>
-                                                <th scope="col">เวลาถึง</th>
                                                 <th scope="col">รถ</th>
                                                 <th scope="col">ราคา</th>
                                                 <th scope="col">สถานะ</th>
@@ -324,7 +325,6 @@ if(isset($_GET["clean_seant"])){
                                                         <td><?= $row["ps_name"] ?></td>
                                                         <td><?= $row["ro_time_start"] ?></td>
                                                         <td><?= $row["pe_name"] ?></td>
-                                                        <td><?= $row["ro_time_end"] ?></td>
                                                         <td><?= $row["b_name"] ?></td>
                                                         <td><?= $row["ro_price"] ?></td>
                                                         <td><p class="label <?= $check_full_seat? 'label-danger':'label-success'?>"><?= $check_full_seat? 'เต็ม!':'ว่าง' ?></p></td>

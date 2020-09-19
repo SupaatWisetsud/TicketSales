@@ -16,7 +16,7 @@ $user = mysqli_fetch_assoc($objQuery);
 $SQL = "SELECT * FROM tb_round_out 
             INNER JOIN tb_bus ON tb_round_out.ro_bus = tb_bus.b_id
             INNER JOIN tb_place_start ON tb_round_out.ro_place_start = tb_place_start.ps_id 
-            INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id";
+            INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id ORDER BY ro_time_start";
 
 $objQuery = mysqli_query($con, $SQL);
 
@@ -166,7 +166,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                             </div>
                         </div>
                         <div class="row" style="margin-top: 10px;">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <h4 style="margin-bottom: 15px;"><i class="fas fa-hourglass-start"></i> เวลาออกเดินทาง</h4>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -193,40 +193,13 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <h4 style="margin-bottom: 15px;"><i class="fas fa-hourglass-end"></i> เวลาถึง</h4>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p style="margin-left: 3px; margin-bottom: 0;">ชั่วโมง</p>
-                                        <select class="form-control" name="time_end_h" id="time_end_h" onchange="changeTime()">
-                                            <?php for ($i = 0; $i <= 9; $i++) : ?>
-                                                <option value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
-                                            <?php endfor; ?>
-                                            <?php for ($i = 10; $i < 24; $i++) : ?>
-                                                <option value="<?= $i ?>"><?= $i ?></option>
-                                            <?php endfor; ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p style="margin-left: 3px; margin-bottom: 0;">นาที</p>
-                                        <select class="form-control" name="time_end_m" id="time_end_m" onchange="changeTime()">
-                                            <?php for ($i = 0; $i <= 9; $i++) : ?>
-                                                <option value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
-                                            <?php endfor; ?>
-                                            <?php for ($i = 10; $i <= 60; $i++) : ?>
-                                                <option value="<?= $i ?>"><?= $i ?></option>
-                                            <?php endfor; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-12">
                                 <h4><i class="fas fa-car"></i> รถ</h4>
                                 <select class="form-control" name="bus" id="bus">
                                     <?php while ($row = mysqli_fetch_assoc($busQuery)) : ?>
-                                        <option value="<?= $row["b_id"] ?>"><?= $row["b_name"] ?></option>
+                                        <option value="<?= $row["b_id"] ?>"><?= $row["b_name"]. " - " .$row["b_id"] ?></option>
                                     <?php endwhile; ?>
                                 </select>
                             </div>
@@ -256,16 +229,15 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                     $time_start_h = explode(":",$time_start)[0];
                     $time_start_m = explode(":",$time_start)[1];
 
-                    $time_end = $_GET["time_end"];
-                    $time_end_h = explode(":",$time_end)[0];
-                    $time_end_m = explode(":",$time_end)[1];
-
                     $bus_id = $_GET["bus_id"];
                     $price = $_GET["price"];
                     
                     $placeStartQuery = mysqli_query($con, "SELECT * FROM tb_place_start");
                     $placeEndQuery = mysqli_query($con, "SELECT * FROM tb_place_end");
                     $busQuery = mysqli_query($con, "SELECT * FROM tb_bus");
+
+            
+                    echo "<input type='hidden' id='e_ro_id' value='$id'>"
                 
             ?>
             <div id="myModal" class="modal container" style="display: block;">
@@ -296,7 +268,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                             </div>
                         </div>
                         <div class="row" style="margin-top: 10px;">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <h4><i class="fas fa-hourglass-start"></i> เวลาออกเดินทาง</h4>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -323,40 +295,13 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <h4><i class="fas fa-hourglass-end"></i> เวลาถึง</h4>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p style="margin-left: 3px; margin-bottom: 0;">ชั่วโมง</p>
-                                        <select class="form-control" name="time_end_h" id="time_end_h2" onchange="changeTime2()">
-                                            <?php for ($i = 0; $i <= 9; $i++) : ?>
-                                                <option <?= $time_end_h == "0".$i? "selected":null ?> value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
-                                            <?php endfor; ?>
-                                            <?php for ($i = 10; $i < 24; $i++) : ?>
-                                                <option <?= $time_end_h == $i? "selected":null ?> value="<?= $i ?>"><?= $i ?></option>
-                                            <?php endfor; ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p style="margin-left: 3px; margin-bottom: 0;">นาที</p>
-                                        <select class="form-control" name="time_end_m" id="time_end_m2" onchange="changeTime2()">
-                                            <?php for ($i = 0; $i <= 9; $i++) : ?>
-                                                <option <?= $time_end_m == "0".$i? "selected":null ?> value="<?= "0" . $i ?>"><?= "0" . $i ?></option>
-                                            <?php endfor; ?>
-                                            <?php for ($i = 10; $i <= 60; $i++) : ?>
-                                                <option <?= $time_end_m == $i? "selected":null ?> value="<?= $i ?>"><?= $i ?></option>
-                                            <?php endfor; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-md-12">
                                 <h4><i class="fas fa-car"></i> รถ</h4>
                                 <select class="form-control" name="bus" id="bus2">
                                     <?php while ($row = mysqli_fetch_assoc($busQuery)) : ?>
-                                        <option <?= $bus_id == $row["b_id"]? "selected":null ?> value="<?= $row["b_id"] ?>"><?= $row["b_name"] ?></option>
+                                        <option <?= $bus_id == $row["b_id"]? "selected":null ?> value="<?= $row["b_id"] ?>"><?= $row["b_name"]. " - " .$row["b_id"] ?></option>
                                     <?php endwhile; ?>
                                 </select>
                             </div>
@@ -404,7 +349,6 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                             <th scope="col"> <i class="fas fa-parking"></i> ต้นทาง</th>
                             <th scope="col"> <i class="fab fa-mendeley"></i> ปลายทาง</th>
                             <th scope="col"> <i class="fas fa-hourglass-start"></i> เวลาเดินทาง</th>
-                            <th scope="col"> <i class="fas fa-hourglass-end"></i> เวลาถึง</th>
                             <th scope="col"> <i class="fas fa-car"></i> รถ</th>
                             <th scope="col"> <i class="fas fa-tags"></i> ราคา</th>
                         </tr>
@@ -420,11 +364,10 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                                 <td><?= $row["ps_name"] ?></td>
                                 <td><?= $row["pe_name"] ?></td>
                                 <td><?= $row["ro_time_start"] ?></td>
-                                <td><?= $row["ro_time_end"] ?></td>
-                                <td><?= $row["b_name"] ?></td>
+                                <td><?= $row["b_name"]. " - " .$row["b_id"] ?></td>
                                 <td><?= $row["ro_price"] ?></td>
                                 <td>
-                                    <a href="?edit=1&id=<?= $row["ro_id"] ?>&ps_id=<?= $row["ps_id"] ?>&pe_id=<?= $row["pe_id"] ?>&time_start=<?= $row["ro_time_start"] ?>&time_end=<?= $row["ro_time_end"] ?>&bus_id=<?= $row["b_id"] ?>&price=<?= $row["ro_price"] ?>">
+                                    <a href="?edit=1&id=<?= $row["ro_id"] ?>&ps_id=<?= $row["ps_id"] ?>&pe_id=<?= $row["pe_id"] ?>&time_start=<?= $row["ro_time_start"] ?>&bus_id=<?= $row["b_id"] ?>&price=<?= $row["ro_price"] ?>">
                                         <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
                                     </a>
                                 </td>
@@ -460,3 +403,125 @@ $groupRoundQuery = mysqli_query($con, $SQL);
 </body>
 
 </html>
+
+<script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("myBtn");
+
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function () {
+    modal.style.display = "block";
+    };
+
+    span.onclick = function () {
+    modal.style.display = "none";
+    };
+
+    window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+    };
+</script>
+
+<script>
+    function listRound() {
+        var xhr = new XMLHttpRequest();
+        xhr.open ("GET", "server/server_list_round_out.php?pass=hsr224");
+        xhr.onreadystatechange = responseXHR;
+        xhr.send(null);
+
+        function responseXHR(){
+            if ( xhr.readyState == 4 )
+            {
+                console.log(JSON.parse(xhr.responseText));
+                print(JSON.parse(xhr.responseText))
+            }
+        }
+
+    }
+
+
+    function print(list) {
+        var mywindow = window.open('', '', 'height=600,width=900');
+        var d = new Date();
+        var genarataPrint = `
+            <html>
+                <head>
+                    <style>
+                    </style>
+                </head>
+                <body style="padding:0px;margin:0px">
+                    <div style="margin-top:10px; width: 100%">
+                        <div style="margin-top:10px; width: 100%">
+                            <div style="display:flex;justify-content: space-between;">
+                                <p style="font-weight: bold;font-size:34px">Ticket Sales</p>
+                                <p>${d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear()}</p>
+                            </div>
+                            <p style="font-weight: bold;font-size:24px;">รายการรอบรถ</p>
+                        </div>
+                    </div>
+        `;
+        
+        for(let n = 0; n < list.length; n++) {
+            genarataPrint += `
+                    <div style=" margin-top:5%;border:2px solid #333; padding: 5px">
+                        <h3 style="margin:0px;padding:0px">${list[n].round}</h3>
+                    </div>
+                    <table style="width:100%;text-align:center;" >
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>ไอดี</th>
+                                <th>ต้นทาง</th>
+                                <th>ปลายทาง</th>
+                                <th>เวลาเดินทาง</th>
+                                <th>รถ</th>
+                                <th>ราคา</th>
+                            </tr>
+                        </thead>
+                        <tbody>  
+            `;
+            
+            for(let x = 0; x < list[n].list.length; x++) {
+                genarataPrint += `
+                    <tr>
+                        <td>${x + 1}</td>
+                        <td>${list[n].list[x].ro_id}</td>
+                        <td>${list[n].list[x].ps_name}</td>
+                        <td>${list[n].list[x].pe_name}</td>
+                        <td>${list[n].list[x].ro_time_start}</td>
+                        <td>${list[n].list[x].b_name} - ${list[n].list[x].b_id}</td>
+                        <td>${list[n].list[x].ro_price}</td>
+                    </tr>
+                `
+            }
+
+            genarataPrint += `
+                        </tbody>
+                    </table>
+            `;
+
+        }
+
+        genarataPrint += `
+                </body>
+            </html>
+        `;
+        
+        
+        mywindow.document.write(genarataPrint);
+        mywindow.document.close();
+        mywindow.focus();
+        mywindow.print();
+        
+        var mediaQueryList = mywindow.matchMedia('print');
+        
+        mediaQueryList.addEventListener("change",function(mql) {
+            if (!mql.matches) {
+                mywindow.close(); 
+            }
+        });
+    }
+</script>

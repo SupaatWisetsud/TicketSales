@@ -20,7 +20,6 @@ $SQL = "SELECT
         tb_place_start.ps_name,
         tb_round_out.ro_time_start,
         tb_place_end.pe_name,
-        tb_round_out.ro_time_end,
         tb_round_out.ro_price
         FROM tb_sales
         INNER JOIN tb_round_out ON tb_sales.sale_round = tb_round_out.ro_id
@@ -312,7 +311,6 @@ $listSaleQuery = mysqli_query($con, $SQL);
                                                 <th>รอบออก</th>
                                                 <th>เวลาออก</th>
                                                 <th>รอบถึง</th>
-                                                <th>เวลาถึง</th>
                                                 <th>ราคา</th>
                                                 <th>จำนวนยอดขาย</th>
                                             </tr>
@@ -327,7 +325,6 @@ $listSaleQuery = mysqli_query($con, $SQL);
                                                     <td><?= $row["ps_name"] ?></td>
                                                     <td><?= $row["ro_time_start"] ?></td>
                                                     <td><?= $row["pe_name"] ?></td>
-                                                    <td><?= $row["ro_time_end"] ?></td>
                                                     <td><?= $row["ro_price"] ?></td>
                                                     <td><?= $row["sale_count"] ?></td>
                                                 </tr>
@@ -359,7 +356,6 @@ $listSaleQuery = mysqli_query($con, $SQL);
                                             <th>รอบออก</th>
                                             <th>เวลาออก</th>
                                             <th>รอบถึง</th>
-                                            <th>เวลาถึง</th>
                                             <th>ที่นั้ง</th>
                                             <th>รถ</th>
                                             <th>ผู้ขายตั๋ว</th>
@@ -374,9 +370,8 @@ $listSaleQuery = mysqli_query($con, $SQL);
                                                 <td><?= $row["ps_name"] ?></td>
                                                 <td><?= $row["ro_time_start"] ?></td>
                                                 <td><?= $row["pe_name"] ?></td>
-                                                <td><?= $row["ro_time_end"] ?></td>
                                                 <td><?= $row["seat_name"] ?></td>
-                                                <td><?= $row["b_name"] ?></td>
+                                                <td><?= $row["b_name"]. " - " .$row["b_id"] ?></td>
                                                 <td><?= $row["u_first_name"] . " " . $row["u_last_name"] ?></td>
                                                 <td><?= $row["sale_price"] ?></td>
                                                 <td><?= $row["sale_time_sale"] ?></td>

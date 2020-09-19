@@ -31,7 +31,6 @@ CREATE TABLE `tb_round_out` (
     `ro_place_start` int NOT NULL, 
     `ro_place_end` int NOT NULL,
     `ro_time_start` time (0) NOT NULL,
-    `ro_time_end` time (0),
     `ro_price` int NOT NULL DEFAULT 0,
     `ro_bus` int not null,
     FOREIGN KEY (ro_place_start) REFERENCES tb_place_start(ps_id) ON UPDATE CASCADE ON DELETE CASCADE,

@@ -8,7 +8,6 @@ function printDiv(divName) {
     let bus_id = document.getElementById("txt_bus_id").value;
     let bus_name = document.getElementById("txt_bus_name").value;
     let time_start = document.getElementById("txt_time_start").value;
-    let time_end = document.getElementById("txt_time_end").value;
     let ps_name = document.getElementById("txt_ps_name").value;
     let pe_name = document.getElementById("txt_pe_name").value;
     let sale_id = document.getElementById("txt_sale_id").value;
@@ -48,24 +47,17 @@ function printDiv(divName) {
                         <th>ต้นทาง</th>
                         <th>เวลาออกเดินทาง</th>
                         <th>ปลายทาง</th>
-                        <th>เวลาเดินทางถึง</th>
                     </tr>
                     <tr style="margin-top:5px">
                         <td>${ps_name}</td>
                         <td>${time_start}</td>
                         <td>${pe_name}</td>
-                        <td>${time_end}</td>
                     </tr>
                 </table>
                 
                 <div style="display:flex;justify-content: space-between;width:100%;padding-left: 15px;padding-right: 15px;box-sizing: border-box;border-top: 1px solid">
-                    <p style="font-weight: bold;">ประเภทรถ</p>
-                    <p>${bus_name} ฿</p>
-                </div>
-
-                <div style="display:flex;justify-content: space-between;width:100%;padding-left: 15px;padding-right: 15px;box-sizing: border-box;">
-                    <p style="margin-top:0px; font-weight: bold;">รหัสรถ</p>
-                    <p style="margin-top:0px;">${bus_id} ฿</p>
+                    <p style="font-weight: bold;">รถ</p>
+                    <p>${bus_name} - ${bus_id}</p>
                 </div>
 
                 <div style="display:flex;justify-content: space-between;width:100%;padding-left: 15px;padding-right: 15px;box-sizing: border-box;">
