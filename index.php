@@ -206,7 +206,7 @@ if(isset($_GET["clean_seant"])){
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
+                <h1 style="color: #616161;">
                     <i class="fas fa-home"></i>
                     หน้าหลัก
                     <small>Control panel</small>
@@ -244,8 +244,7 @@ if(isset($_GET["clean_seant"])){
                                     </select>
                                 </div>
                                 <div class="col-md-1" style="display: flex; justify-content: center; align-items: center;">
-
-                                    <i class="fas fa-car-side" style="font-size:32px"></i>
+                                    <i style="font-size:32px;color:#616161" class="fas fa-shipping-fast"></i>
                                 </div>
                                 <div class="col-md-4">
                                     <select class="form-control" name="search_end">
@@ -283,11 +282,11 @@ if(isset($_GET["clean_seant"])){
                                     $rountResult = mysqli_fetch_all($rountQuery, MYSQLI_ASSOC);
                                     while($rowGroup = mysqli_fetch_assoc($groupPlaceQuery)){
                                 ?>
-                                    <h4><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
+                                    <h4 style="color: #616161;"><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
                                             
                                     <div style="overflow-x: auto;">
                                     <table class="table text-center" >
-                                        <thead style="background-color: #5DADE2; color: white;">
+                                        <thead style="background-color: #4B4A67; color: white;">
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">ต้นทาง</th>
@@ -298,7 +297,7 @@ if(isset($_GET["clean_seant"])){
                                                 <th scope="col">สถานะ</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody style="color: #616161;">
                                             <?php 
                                                 $i = 1;
                                                
@@ -326,7 +325,7 @@ if(isset($_GET["clean_seant"])){
                                                         <td><?= $row["ps_name"] ?></td>
                                                         <td><?= $row["ro_time_start"] ?></td>
                                                         <td><?= $row["pe_name"] ?></td>
-                                                        <td><?= $row["b_name"] ?></td>
+                                                        <td><?= $row["b_name"]. " - " .$row["b_id"] ?></td>
                                                         <td><?= $row["ro_price"] ?></td>
                                                         <td><p class="label <?= $check_full_seat? 'label-danger':'label-success'?>"><?= $check_full_seat? 'เต็ม!':'ว่าง' ?></p></td>
                                                         <td>
@@ -357,8 +356,25 @@ if(isset($_GET["clean_seant"])){
                     </div>
                     <div class="col-md-6">
                         <div class="box-seat">
-                            <div class="row" style="box-sizing: border-box; padding-left: 35px;">
-                                <p style="font-weight: bold;font-size: 18px;"><i class="fas fa-swatchbook"></i> ที่นั้ง</ย>
+                            <div class="row" style="box-sizing: border-box; padding-left: 35px;display: flex;justify-content: space-between;">
+                                <div style="flex: 1;">
+                                    <p style="font-weight: bold;font-size: 18px;color:#616161"><i class="fas fa-swatchbook"></i> ที่นั้ง</p>
+                                </div>
+                                <?php 
+                                    if(isset($_GET["ro_id"])){
+                                        $SQL = "SELECT * FROM tb_round_out
+                                        INNER JOIN tb_place_start ON tb_round_out.ro_place_start = tb_place_start.ps_id 
+                                        INNER JOIN tb_place_end ON tb_round_out.ro_place_end = tb_place_end.pe_id
+                                        WHERE ro_id = {$_GET['ro_id']}";
+
+                                        $get_place_start_end_query = mysqli_query($con, $SQL);
+                                        $get_place_start_end_result = mysqli_fetch_assoc($get_place_start_end_query);
+
+                                        echo "<div style='flex: 1;'>
+                                                <p style='color:#616161;font-weight: bold;text-align: end;font-size: 18px;padding-right: 40px;'>{$get_place_start_end_result['ps_name']} - {$get_place_start_end_result['pe_name']}</p>
+                                            </div>";
+                                    }
+                                ?>
                             </div>
                             <div class="box-seat-list" style="overflow-x: hidden;overflow-y: auto;">
                                 <div class="row"">

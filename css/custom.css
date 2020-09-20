@@ -79,15 +79,16 @@
 }
 
 .box-seat {
-  padding: 15px;
+  padding: 8px;
   background-color: white;
-  border-radius: 10px;
-  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.4) ;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  margin-top: 40px;
 }
 .box-seat-list {
   height: 80%;
   border: 2px solid #333;
   border-radius: 5px;
+  min-height: 425px;
 }
 .group-detail-index {
   display: flex;
@@ -121,9 +122,7 @@
   height: 50px;
 }
 .select-box-seat {
-  background-color: #F8C471;
-  border-radius: 5px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  background-color: #DDD1C7;
 }
 .status-red {
   opacity: 0.5;
@@ -136,10 +135,10 @@
 }
 
 .select-row-seat {
-  background-color: #AED6F1;
+  background-color: #DDD1C7 !important;
 }
 .select-row-ro {
-  background-color: #AED6F1;
+  background-color: #DDD1C7 !important;
 }
 .status_red {
   margin-top: 5px;
@@ -172,7 +171,58 @@
   color: #ffffff;
 }
 
+.skin-blue .navbar {
+  background-color: #8DB580 !important;
+}
 
+.skin-blue .logo {
+  background-color: #75966a !important;
+  color: #f9f9f9 !important;
+}
+
+.btn.btn-primary {
+  background-color: #ABC8C7 !important;
+  border: none !important;
+}
+.btn.btn-primary:hover {
+  background-color: #8aacaa !important;
+  border: none !important;
+}
+.btn.btn-warning {
+  background-color: #F2B880 !important;
+  border: none !important;  
+}
+.btn.btn-warning:hover {
+  background-color: #c59466 !important;
+  border: none !important;  
+}
+.btn.btn-success {
+  background-color: #9fc570 !important;
+  border: none !important;
+}
+.btn.btn-success:hover {
+  background-color: #83a55a !important;
+  border: none !important;
+}
+.btn.btn-danger {
+  background-color: #C98686 !important;
+  border: none !important;
+}
+.btn.btn-danger:hover {
+  background-color: #a76d6d !important;
+  border: none !important;
+}
+
+.active  a {
+  background-color: #7E8987 !important;
+  color: white !important;
+}
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header {
+  background: #6f9761 !important;
+}
+.navbar-nav > .user-menu > .dropdown-menu > li.user-header > p {
+  text-shadow: none !important;
+}
 @media screen and (max-width: 1088px) {
 
   .modal-content, .modal-content-seat {

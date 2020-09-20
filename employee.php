@@ -32,6 +32,7 @@ $objUserAll = mysqli_query($con, $SQL);
     <!-- font Awesome -->
     <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -113,7 +114,7 @@ $objUserAll = mysqli_query($con, $SQL);
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
+                <h1 style="color: #616161;">
                     <i class="fas fa-users"></i> พนักงาน
                     <small>Control panel</small>
                 </h1>
@@ -136,7 +137,7 @@ $objUserAll = mysqli_query($con, $SQL);
                 </div>
                 <div class="container" style="overflow-x: auto;">
                     <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
-                        <thead class="thead-dark" style="background-color: #5DADE2;color:white">
+                        <thead class="thead-dark" style="background-color: #4B4A67;color:white">
                             <tr>
                                 <th scope="col">
                                     <i class="fas fa-sort-numeric-down"></i>
@@ -160,7 +161,7 @@ $objUserAll = mysqli_query($con, $SQL);
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="color: #616161;">
                             <?php while($row = mysqli_fetch_assoc($objUserAll)): ?>
                                 <tr>
                                     <th scope="row"><?= $row["u_id"]?></th>

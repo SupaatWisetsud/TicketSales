@@ -111,16 +111,16 @@ $user = mysqli_fetch_assoc($objQuery);
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             <section class="content-header" style="display: flex;">
-                <a href="employee.php"><i class="fas fa-arrow-left" style="margin-right: 5px; font-size: 24px; color:#000"></i></a>
-                <h1>
+                <a href="employee.php"><i class="fas fa-arrow-left" style="margin-right: 5px; font-size: 24px; color:#616161"></i></a>
+                <h1 style="color: #616161;">
                     <i class="fas fa-users"></i> เพิ่มลูกจ้าง
                 </h1>
             </section>
 
             <!-- Main content -->
-            <section class="content container content_add_emp">
+            <section class="content container content_add_emp" style="color: #616161;">
                 <form class="form_add_emp" action="action/action_add_emp.php" method="POST">
-                    <div class="form_title"><i class="fab fa-wpforms"></i> กรอกข้อมูลลูกจ้าง</div>
+                    <div class="form_title" ><i class="fab fa-wpforms"></i> กรอกข้อมูลลูกจ้าง</div>
                     <div class="form-group">
                         <label for="email"> <i class="fas fa-envelope-square"></i> อีเมลล์</label>
                         <input type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" required autofocus>

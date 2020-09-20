@@ -100,7 +100,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
     </style>
 </head>
 
-<body class="skin-blue">
+<body class="skin-blue" style="color: #616161;">
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.php" class="logo">
@@ -191,7 +191,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
                     <!-- show page -->
                     <div id="show_count_page">
                         <div class="col-md-4">
-                            <div class="box-chart" style="background-color: #34495E;">
+                            <div class="box-chart" style="background-color: #7E8987;">
                                 <?php
                                 $SQL = "SELECT COUNT(*) FROM tb_sales";
                                 $countSaleQuery = mysqli_query($con, $SQL);
@@ -210,7 +210,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="box-chart" style="background-color: #5DADE2;">
+                            <div class="box-chart" style="background-color: #C2CFB2;">
                                 <?php
                                 $SQL = "SELECT SUM(sale_price) FROM tb_sales";
                                 $countPriceQuery = mysqli_query($con, $SQL);
@@ -305,7 +305,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
                             <div class="box-table-chart">
                                 <div style="overflow-y: auto;">
                                     <table class="table table-striped text-center">
-                                        <thead style="background-color: #58D68D;">
+                                        <thead style="background-color: #4B4A67;color: white;">
                                             <tr>
                                                 <th>No.</th>
                                                 <th>รอบออก</th>
@@ -350,7 +350,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
                         <div class="box-table-chart">
                             <div style="overflow-y: auto;">
                                 <table class="table table-striped text-center" id="list_sale_table">
-                                    <thead style="background-color: #5DADE2; color:white">
+                                    <thead style="background-color: #4B4A67; color:white">
                                         <tr>
                                             <th>No.</th>
                                             <th>รอบออก</th>
@@ -417,7 +417,3 @@ $listSaleQuery = mysqli_query($con, $SQL);
 </body>
 
 </html>
-
-<script>
- 
-</script>

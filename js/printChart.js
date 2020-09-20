@@ -1,5 +1,5 @@
    
-    var dataList = [
+var dataList = [
         0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,
         0,0,0,0,0,0,0,0,0,0,0
@@ -58,8 +58,8 @@ function generateChart(dataList) {
         datasets: [{
             label: 'ยอดขายในเดือน ' + month[d.getMonth()],
             data: dataList,
-            backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-            borderColor: ['rgba(255, 99, 132, 1)'],
+            backgroundColor: ['#966B9D'],
+            borderColor: ['#7E8987'],
             borderWidth: 1
         }]
     }

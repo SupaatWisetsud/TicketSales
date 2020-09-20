@@ -125,7 +125,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
+                <h1 style="color:#616161">
                     <i class="fas fa-table"></i> ตารางรอบรถ
                     <small>Control panel</small>
                 </h1>
@@ -141,7 +141,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                     $busQuery = mysqli_query($con, "SELECT * FROM tb_bus");
                 ?>
                 <!-- Modal content -->
-                <div class="modal-content">
+                <div class="modal-content" style="color:#616161">
 
                     <span class="close">&times;</span>
                     <h3><i class="fas fa-plus"></i> เพิ่มรอบรถ</h3>
@@ -242,7 +242,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
             ?>
             <div id="myModal" class="modal container" style="display: block;">
                 <!-- Modal content -->
-                <div class="modal-content">
+                <div class="modal-content" style="color: #616161;">
 
                     <a href="round_out.php"><span class="close">&times;</span></a>
                     <h3><i class="fas fa-edit"></i> แก้ไขรอบรถ</h3>
@@ -339,10 +339,10 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                     while($rowGroup = mysqli_fetch_assoc($groupRoundQuery)):
                 ?>
                 <!-- table round -->
-                <h4><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
+                <h4 style="color: #616161;margin-bottom: 0px;margin-top: 15px;"><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
                 <div style="overflow-x: auto;">
                 <table class="table table-striped text-center" style="margin-top: 15px;">
-                    <thead class="thead-dark" style="background-color: #5DADE2;color:white">
+                    <thead class="thead-dark" style="background-color: #4B4A67;color:white">
                         <tr>
                             <th scope="col">
                                 <i class="fas fa-sort-numeric-down"></i> No.
@@ -354,7 +354,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                             <th scope="col"> <i class="fas fa-tags"></i> ราคา</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style="color: #616161;">
                         <?php
                         $i = 1;
                         foreach ($rountResult as $row) {

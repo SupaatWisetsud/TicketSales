@@ -43,11 +43,11 @@ $peQuery = mysqli_query($con, $SQL);
     <!-- font Awesome -->
     <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
-
+    <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
 </head>
 
-<body class="skin-blue">
+<body class="skin-blue" style="color: #616161;">
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.php" class="logo">
@@ -164,7 +164,7 @@ $peQuery = mysqli_query($con, $SQL);
                             <div class="row">
                                 <div class="col-md-12">
                                     <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
-                                        <thead class="thead-dark" style="background-color: #5DADE2;color:white">
+                                        <thead class="thead-dark" style="background-color: #4B4A67;color:white">
                                             <tr>
                                                 <th scope="col">
                                                     <i class="fas fa-sort-numeric-down"></i>
@@ -232,7 +232,7 @@ $peQuery = mysqli_query($con, $SQL);
                             <div class="row">
                                 <div class="col-md-12">
                                     <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
-                                        <thead class="thead-dark" style="background-color: #F7DC6F;color:white">
+                                        <thead class="thead-dark" style="background-color: #4B4A67;color:white">
                                             <tr>
                                                 <th scope="col">
                                                     <i class="fas fa-sort-numeric-down"></i>
