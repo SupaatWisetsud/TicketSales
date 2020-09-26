@@ -280,6 +280,7 @@ if(isset($_GET["clean_seant"])){
                                 <?php 
                                     
                                     $rountResult = mysqli_fetch_all($rountQuery, MYSQLI_ASSOC);
+                                    $seat_count_round = mysqli_fetch_all($count_round, MYSQLI_ASSOC);
                                     while($rowGroup = mysqli_fetch_assoc($groupPlaceQuery)){
                                 ?>
                                     <h4 style="color: #616161;"><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
@@ -310,10 +311,8 @@ if(isset($_GET["clean_seant"])){
                                                         $count_seat_in_bus = mysqli_fetch_row(mysqli_query($con, $SQL))[0];
                                                         
                                                         $check_full_seat = false;
-                                                        while($check_seat = mysqli_fetch_assoc($count_round)){
-                                                            if(
-                                                                $check_seat["bs_round_out"] == $row["ro_id"] 
-                                                                && $check_seat["bs_count_round"] == $count_seat_in_bus){
+                                                        foreach($seat_count_round as $check_seat){
+                                                            if($check_seat["bs_round_out"] == $row["ro_id"] && $check_seat["bs_count_round"] == $count_seat_in_bus){
                                                                 $check_full_seat = true;
                                                             }
                                                         }

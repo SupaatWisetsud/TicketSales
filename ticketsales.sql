@@ -289,9 +289,9 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`u_id`, `u_email`, `u_password`, `u_first_name`, `u_last_name`, `u_role`, `u_tel`) VALUES
-(1, 'admin@mail.com', 'd41d8cd98f00b204e9800998ecf8427e', 'กิตชัย', 'แสงอ่อน', 1, '0911111111'),
-(7, 'user@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'ทรนาดน', 'แสงศรี', 0, '0915645625'),
-(10, 'user2@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'พงศรี', 'อ่อนแสง', 0, '0941585855');
+(1, 'admin@mail.com', '25d55ad283aa400af464c76d713c07ad', 'กิตชัย', 'แสงอ่อน', 1, '0911111111'),
+(7, 'user@mail.com', '25d55ad283aa400af464c76d713c07ad', 'ทรนาดน', 'แสงศรี', 0, '0915645625'),
+(10, 'user2@mail.com', '25d55ad283aa400af464c76d713c07ad', 'พงศรี', 'อ่อนแสง', 0, '0941585855');
 
 --
 -- Indexes for dumped tables
