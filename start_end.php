@@ -43,7 +43,7 @@ $peQuery = mysqli_query($con, $SQL);
     <!-- font Awesome -->
     <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
-    <link href="css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="css/Custom.css" rel="stylesheet" type="text/css" />
 
 </head>
 

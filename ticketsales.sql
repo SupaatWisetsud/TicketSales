@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2020 at 08:26 AM
+-- Generation Time: Sep 29, 2020 at 08:45 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -360,9 +360,8 @@ CREATE TABLE `tb_user` (
 --
 
 INSERT INTO `tb_user` (`u_id`, `u_email`, `u_password`, `u_first_name`, `u_last_name`, `u_address`, `u_role`, `u_tel`) VALUES
-(1, 'admin@mail.com', '25d55ad283aa400af464c76d713c07ad', 'กิตชัย', 'แสงอ่อน', '', 1, '0911111111'),
-(7, 'user@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'ทรนาดน', 'แสงศรี', '', 1, '0915645625'),
-(10, 'user2@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'พงศรี', 'อ่อนแสง', '', 0, '0941585855');
+(1, 'admin@mail.com', '25d55ad283aa400af464c76d713c07ad', 'กิตชัย', 'แสงอ่อน', '391/1 ตำบลชุมเห็ด อำเภอเมือง จังหวัดบุรีรัมย์', 1, '0911111111'),
+(7, 'user@mail.com', 'e10adc3949ba59abbe56e057f20f883e', 'ทรนาดน', 'แสงศรี', '311/2 ตำบลสระคู อำเภอเมือง จังหวัดบุรีรัมย์', 1, '0915645625');
 
 --
 -- Indexes for dumped tables
