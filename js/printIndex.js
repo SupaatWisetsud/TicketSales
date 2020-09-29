@@ -83,14 +83,8 @@ function printDiv(divName) {
     mywindow.focus();
     mywindow.print();
     
-    var mediaQueryList = mywindow.matchMedia('print');
-    
-    mediaQueryList.addEventListener("change",function(mql) {
-        if (!mql.matches) {
-            mywindow.close(); 
-            unDataToDB(ro_id, user_id, price, bus_id);
-        }
-    });
+    mywindow.close(); 
+    unDataToDB(ro_id, user_id, price, bus_id);
 }
 
 function sale(divName){

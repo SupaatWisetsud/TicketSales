@@ -149,7 +149,12 @@ $user = mysqli_fetch_assoc($objQuery);
                             </div>
                         </div>
                     </div>
-                    
+
+                    <div class="form-group">
+                        <label for="text_area"> <i class="fas fa-address-card"></i> ที่อยู่ </label>
+                        <textarea name="address" class="form-control" id="text_area" rows="3" placeholder="Address" required></textarea>
+                    </div>
+
                     <div class="form-group">
                         <label for="first_name"><i class="fas fa-shield-alt"></i> สิทธิ์การใช้งาน</label>
                         <select class="form-control" name="role">

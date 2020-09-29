@@ -1,9 +1,5 @@
    
-var dataList = [
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,
-        0,0,0,0,0,0,0,0,0,0,0
-];
+var dataList = Array(31).fill(0)
 
 var objRespones = [];
 

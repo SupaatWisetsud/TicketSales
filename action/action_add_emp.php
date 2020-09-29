@@ -12,6 +12,7 @@
         $last_name = $_POST["last_name"];
         $role = $_POST["role"];
         $tel = $_POST["tel"];
+        $address = $_POST["address"];
 
         $SQL = "SELECT * FROM tb_user WHERE u_email = '{$email}'";
         $check_email = mysqli_query($con, $SQL);
@@ -29,7 +30,7 @@
                     </script>";
             }
             $hash_password = md5($password);
-            $SQL = "INSERT INTO tb_user(u_email, u_password, u_first_name, u_last_name, u_role, u_tel) VALUES ('{$email}', '{$hash_password}', '{$first_name}', '{$last_name}', '{$role}', '{$tel}')";
+            $SQL = "INSERT INTO tb_user(u_email, u_password, u_first_name, u_last_name, u_address, u_role, u_tel) VALUES ('{$email}', '{$hash_password}', '{$first_name}', '{$last_name}', '{$address}', '{$role}', '{$tel}')";
     
             $objQuert = mysqli_query($con, $SQL);
             if ($objQuert) header("location:../employee.php");
