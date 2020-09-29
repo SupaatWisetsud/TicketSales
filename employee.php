@@ -152,6 +152,10 @@ $objUserAll = mysqli_query($con, $SQL);
                                     ชื่อ - นามสกุล
                                 </th>
                                 <th scope="col">
+                                    <i class="fas fa-signature"></i>
+                                    ที่อยู่
+                                </th>
+                                <th scope="col">
                                     <i class="fas fa-shield-alt"></i>
                                     สถานะใช้งาน
                                 </th>
@@ -167,6 +171,7 @@ $objUserAll = mysqli_query($con, $SQL);
                                     <th scope="row"><?= $row["u_id"]?></th>
                                     <td><?= $row["u_email"]?></td>
                                     <td><?= $row["u_first_name"] ." ". $row["u_last_name"] ?></td>
+                                    <td style="width: 175px;word-wrap: break-word;"><?= $row["u_address"] ?></td>
                                     <td><?= $row["u_role"] == 0? "<p class='label label-warning'>ลูกจ้าง</p>":"<p class='label label-success'>ผู้ดูแล</p>" ?></td>
                                     <td><?= $row["u_tel"]?></td>
                                     <td>
