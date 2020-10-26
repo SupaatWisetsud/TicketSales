@@ -24,7 +24,7 @@ function print(listUser) {
                 <body style="padding:0px;margin:0px">
                     <div style="margin-top:10px; width: 100%">
                         <div style="display:flex;justify-content: space-between;">
-                            <p style="font-weight: bold;font-size:34px">Ticket Sales</p>
+                            <p style="font-weight: bold;font-size:34px">บริษัทแสงสมชัย</p>
                             <p>${
                               d.getDate() +
                               "/" +

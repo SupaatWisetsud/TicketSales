@@ -45,7 +45,7 @@ if (isset($_GET["bus_id"]) && isset($_GET["ro_id"])) {
     $bookSeatResult = mysqli_fetch_all($bookSeatQuery, MYSQLI_ASSOC);
 
     foreach ($bookSeatResult as $key => $val) {
-        $timestamp_round = strtotime($val["bs_time"]) - 18000;
+        $timestamp_round = strtotime($val["bs_time"]) - 21600;
         $timestamp_current = strtotime($time_current);
 
         if ($timestamp_current > $timestamp_round) {
@@ -94,7 +94,7 @@ if(isset($_GET["clean_seant"])){
     <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
 
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
-    <link href="css/Custom.css" rel="stylesheet" type="text/css" />
+    <link href="css/custom.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body class="skin-blue" >
@@ -135,7 +135,7 @@ if(isset($_GET["clean_seant"])){
     <!-- header logo: style can be found in header.less -->
     <header class="header" id="body-header">
         <a href="index.php" class="logo">
-            <img src="svg/parking_ticket.svg" width="35px" height="35px"/>Ticket Sales
+            <img src="svg/parking_ticket.svg" width="35px" height="35px"/>บริษัทแสงสมชัย
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">

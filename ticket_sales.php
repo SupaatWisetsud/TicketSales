@@ -74,23 +74,34 @@ $listSaleQuery = mysqli_query($con, $SQL);
     <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
 
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
-    <link href="css/Custom.css" rel="stylesheet" type="text/css" />
+    <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
     <style>
         @media print {
-            #navigation_sales, 
+
+            #navigation_sales,
             #print_report,
             #show_count_page {
-                display:none;
+                display: none;
             }
-            #title_chart {
-                display: block !important;
-            }
-            #myChartLine {
+            #sale_year_ctx {
                 width: 100% !important;
             }
+
+            #sale_month_ctx, #count_category_car {
+                margin-top: 20px !important;
+                width: 100% !important;
+            }
+
             #show_count_page_print {
                 display: block !important;
+            }
+            #print-row {
+                display: flex !important;
+            }
+            .row-print-time {
+                margin-top: 20px !important;
+                display: flex !important;
             }
         }
 
@@ -104,7 +115,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
     <!-- header logo: style can be found in header.less -->
     <header class="header">
         <a href="index.php" class="logo">
-            <img src="svg/parking_ticket.svg" width="35px" height="35px" />Ticket Sales
+            <img src="svg/parking_ticket.svg" width="35px" height="35px" />บริษัทแสงสมชัย
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -235,11 +246,11 @@ $listSaleQuery = mysqli_query($con, $SQL);
                         </button>
                     </div>
                 </div>
-                
+
                 <!-- show in print -->
                 <div class="row" id="show_count_page_print" style="display: none;">
                     <div style="padding-left: 25px;display: flex; justify-content: space-between;">
-                        <h1 style=" font-weight: bold;">Ticket Sales</h1>
+                        <h1 style=" font-weight: bold;">บริษัทแสงสมชัย</h1>
                         <p><?= date('m/d/Y H:i:s', time()) ?></p>
                     </div>
                     <div style="padding-left: 20px;margin-top: 1%;">
@@ -272,31 +283,26 @@ $listSaleQuery = mysqli_query($con, $SQL);
                     </div>
                 </div>
 
-                    
 
-                <div class="row">
+
+                <div class="row" id="print-row">
                     <div class="col-md-6">
-                        <?php 
-                            $month = [
-                                "มกราคม (January)",
-                                "กุมภาพันธ์ (February)",
-                                "มีนาคม (March)",
-                                "เมษายน (April)",
-                                "พฤษภาคม (May)",
-                                "มิถุนายน (June)",
-                                "กรกฎาคม (July)",
-                                "สิงหาคม (August)",
-                                "กันยายน (September)",
-                                "ตุลาคม (October)",
-                                "พฤศจิกายน (November)",
-                                "ธันวาคม (December)"
-                            ]
-                        ?>
-                        <div id="title_chart" style="display: none;text-align: center;border: 1px solid #333;margin-top: 5%;">
-                            <h4 style="font-weight: bold;">กราฟแสดงยอดการขายในเดือน <?= $month[(int)date('m') - 1] ?></h4>
-                        </div>
-                        <div class="chart" style="border: 1px solid #333; border-radius: 5px;">
-                            <canvas id="myChartLine" width="400" height="250"></canvas>
+                        <div class="chart">
+                            <div class="row row-print-time">
+                                <div class="col-md-6">
+                                    <h4><strong>
+                                        <i class="fas fa-vote-yea"></i> ยอดขายในแต่ละปี
+                                    </strong></h4>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <select class="form-control" name="year" id="sale_each_year" onchange="changeSaleYear()"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <canvas id="sale_year_ctx"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -340,6 +346,52 @@ $listSaleQuery = mysqli_query($con, $SQL);
                     </div>
                 </div>
 
+                <div class="row" style="margin-top: 20px;margin-bottom: 10px;">
+
+                    <div class="col-md-6">
+
+                        <div class="row row-print-time">
+                            <div class="col-md-6">
+                                <h4>
+                                    <strong> <i class="fas fa-align-justify"></i> ยอดขายในแต่ละเดือน</strong>
+                                </h4>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <input class="form-control" type="month" name="month" id="sale_each_month" onchange="changeSaleMonth()">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <canvas id="sale_month_ctx"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="row row-print-time">
+                            <div class="col-md-6">
+                                <h4>
+                                    <strong> <i class="fas fa-h-square"></i> การขึ้นรถในแต่ละวัน</strong>
+                                </h4>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <input class="form-control" type="date" name="date" id="history_car" onchange="changeDateCategoryCar()">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <canvas id="count_category_car"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
                 <div class="row">
                     <div class="col-md-12">
                         <h3 style="font-weight: bold;"> <i class="far fa-list-alt"></i> รายการขายตั๋ว</h3>
@@ -371,7 +423,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
                                                 <td><?= $row["ro_time_start"] ?></td>
                                                 <td><?= $row["pe_name"] ?></td>
                                                 <td><?= $row["seat_name"] ?></td>
-                                                <td><?= $row["b_name"]. " - " .$row["b_id"] ?></td>
+                                                <td><?= $row["b_name"] . " - " . $row["b_id"] ?></td>
                                                 <td><?= $row["u_first_name"] . " " . $row["u_last_name"] ?></td>
                                                 <td><?= $row["sale_price"] ?></td>
                                                 <td><?= $row["sale_time_sale"] ?></td>
@@ -412,7 +464,7 @@ $listSaleQuery = mysqli_query($con, $SQL);
 
     <script src="js/AdminLTE/app2.js" type="text/javascript"></script>
     <!-- <script src="js/round_out.js" type="text/javascript"></script> -->
-    <script src="js/printChart.js" type="text/javascript"></script>
+    <script src="js/printchart.js" type="text/javascript"></script>
     <script src="node_modules/chart.js/dist/Chart.min.js"></script>
 </body>
 

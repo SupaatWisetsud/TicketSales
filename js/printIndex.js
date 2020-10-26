@@ -35,7 +35,7 @@ function printDiv(divName) {
                             align-items: flex-end;
                             padding-bottom: 10px;"
                         >
-                        <h1 style="margin:0">Ticket Sales</h1>
+                        <h1 style="margin:0">บริษัทแสงสมชัย</h1>
                     </div>
                     <div>
                         <h4>รหัสตั๋ว ${parseInt(sale_id) + 1 + i}</h4>

@@ -5,7 +5,7 @@
 
 .sidenav {
   height: 100%;
-  background-color: #85c1e9;
+  background-color: #F5B041;
   overflow-x: hidden;
   padding-top: 20px;
 }
@@ -218,7 +218,7 @@
   color: white !important;
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
-  background: #6f9761 !important;
+  background: #d6b26f !important;
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p {
   text-shadow: none !important;

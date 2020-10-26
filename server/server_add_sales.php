@@ -18,7 +18,7 @@
 
             $time_stamp = time();
 
-            $time = date('Y/m/d H:i:s', time() + 18000);
+            $time = date('Y/m/d H:i:s', time() + 21600);
             
             foreach($_SESSION["set_select_seat"] as $val) {
                 $SQL = "INSERT INTO tb_sales (sale_round, sale_emp, sale_seat, sale_price, sale_time_sale, sale_emp_name) 
@@ -34,11 +34,11 @@
                     $date_current = date('Y/m/d', $time_stamp);
                     //เวลารอบ
                     
-                    $time_round_stmap = strtotime($date_current. " " .$ro_time_start) - 18000;
-                    $time_round = date('Y/m/d H:i:s', $time_round_stmap + 18000);
+                    $time_round_stmap = strtotime($date_current. " " .$ro_time_start) - 21600;
+                    $time_round = date('Y/m/d H:i:s', $time_round_stmap + 21600);
 
                     if($time_round_stmap < $time_stamp) {
-                        $time_round = date('Y/m/d H:i:s', strtotime("+1 day", $time_round_stmap + 18000));    
+                        $time_round = date('Y/m/d H:i:s', strtotime("+1 day", $time_round_stmap + 21600));    
                     }
                     
                     $SQL = "INSERT INTO tb_book_seat (bs_round_out, bs_time, bs_book_seat) VALUE ('{$id_round}', '{$time_round}', '{$val['id']}')";

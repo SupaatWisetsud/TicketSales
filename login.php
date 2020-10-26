@@ -6,7 +6,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Ticket Sales</title>
+        <title>บริษัทแสงสมชัย</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- bootstrap 3.0.2 -->
         <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.min.css">
         <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <!-- custom.css -->
-        <link href="css/Custom.css" rel="stylesheet" type="text/css" />
+        <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
 
     </head>
@@ -22,7 +22,7 @@
 
         <div class="sidenav">
             <div class="login-main-text">
-                <h1 class="title-logo">Ticket Sales</h1>
+                <h1 class="title-logo">บริษัทแสงสมชัย</h1>
                 <h2 class="sub-title-logo">Login Page</h2>
                 <p>Login from here to access.</p>
             </div>
