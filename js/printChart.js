@@ -23,7 +23,7 @@ function loadCategoryHot(day) {
   if (myChartCategoryHot) myChartCategoryHot.destroy();
 
   getListDataToDayCategoryCarHot(day, function (data) {
-    let labels = data.map((n) => n.b_name);
+    let labels = data.map((n) => `${n.b_name} : ${n.count}` );
     let datas = data.map((n) => n.count);
     let backgroundColor = data.map(
       (_, i) => "#" + (((1 << 24) * Math.random()) | 0).toString(16)
