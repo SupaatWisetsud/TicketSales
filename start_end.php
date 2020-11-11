@@ -164,7 +164,7 @@ $peQuery = mysqli_query($con, $SQL);
                             <div class="row">
                                 <div class="col-md-12">
                                     <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
-                                        <thead class="thead-dark" style="background-color: #4B4A67;color:white">
+                                        <thead class="thead-dark" style="background-color: #52BE80;color:white">
                                             <tr>
                                                 <th scope="col">
                                                     <i class="fas fa-sort-numeric-down"></i>
@@ -232,7 +232,7 @@ $peQuery = mysqli_query($con, $SQL);
                             <div class="row">
                                 <div class="col-md-12">
                                     <table class="table table-striped text-center" style="margin-top: 10px;box-sizing: border-box;">
-                                        <thead class="thead-dark" style="background-color: #4B4A67;color:white">
+                                        <thead class="thead-dark" style="background-color: #52BE80;color:white">
                                             <tr>
                                                 <th scope="col">
                                                     <i class="fas fa-sort-numeric-down"></i>

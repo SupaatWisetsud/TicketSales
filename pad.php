@@ -176,7 +176,7 @@ $busQuery = mysqli_query($con, $SQL);
                                 <button id="btn-add-car" class="btn btn-success"> <i class="fas fa-plus"></i> เพิ่มรถโดยสาร</button>
                             </div>
                             <table class="table text-center" style="margin-top: 15px;">
-                                <thead style="background-color: #4B4A67; color: white">
+                                <thead style="background-color: #52BE80; color: white">
                                     <tr>
                                         <th scope="col"> <i class="fas fa-sort-numeric-down"></i> #</th>
                                         <th scope="col"><i class="fab fa-ideal"></i> ไอดี</th>
@@ -221,7 +221,7 @@ $busQuery = mysqli_query($con, $SQL);
                                 <button id="myBtn" class="btn btn-success" <?= !isset($_GET["bus_id"]) ? "disabled" : null ?>><i class="fas fa-plus"></i> เพิ่มที่นั้ง</button>
                             </div>
                             <table class="table table-striped text-center text-center" style="margin-top: 15px;">
-                                <thead  style="background-color: #4B4A67; color: white">
+                                <thead  style="background-color: #52BE80; color: white">
                                     <tr>
                                         <th scope="col"> <i class="fas fa-sort-numeric-down"></i> #</th>
                                         <th scope="col"><i class="fab fa-ideal"></i> ไอดี</th>

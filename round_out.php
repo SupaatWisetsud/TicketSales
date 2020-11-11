@@ -342,7 +342,7 @@ $groupRoundQuery = mysqli_query($con, $SQL);
                 <h4 style="color: #616161;margin-bottom: 0px;margin-top: 15px;"><b><?= $rowGroup['ps_name']. " - " .$rowGroup['pe_name'] ?></b></h4>
                 <div style="overflow-x: auto;">
                 <table class="table table-striped text-center" style="margin-top: 15px;">
-                    <thead class="thead-dark" style="background-color: #4B4A67;color:white">
+                    <thead class="thead-dark" style="background-color: #52BE80;color:white">
                         <tr>
                             <th scope="col">
                                 <i class="fas fa-sort-numeric-down"></i> No.

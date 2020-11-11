@@ -122,7 +122,7 @@
   height: 50px;
 }
 .select-box-seat {
-  background-color: #DDD1C7;
+  background-color: #CACFD2;
 }
 .status-red {
   opacity: 0.5;
@@ -135,7 +135,8 @@
 }
 
 .select-row-seat {
-  background-color: #DDD1C7 !important;
+  background-color: #5D6D7E !important;
+  color: white;
 }
 .select-row-ro {
   background-color: #DDD1C7 !important;
@@ -180,7 +181,10 @@
   color: #f9f9f9 !important;
 }
 
-.btn.btn-primary {
+.pagination > .active > a {
+  border: none !important; 
+}
+/* .btn.btn-primary {
   background-color: #ABC8C7 !important;
   border: none !important;
 }
@@ -211,11 +215,12 @@
 .btn.btn-danger:hover {
   background-color: #a76d6d !important;
   border: none !important;
-}
+} */
 
 .active  a {
-  background-color: #7E8987 !important;
+  background-color: #F5B041 !important;
   color: white !important;
+  border-radius: 5px;
 }
 .navbar-nav > .user-menu > .dropdown-menu > li.user-header {
   background: #d6b26f !important;

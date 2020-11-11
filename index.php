@@ -99,7 +99,7 @@ if(isset($_GET["clean_seant"])){
 
 <body class="skin-blue" >
 
-
+    <input type="hidden" id="user" name="user" value="<?= $user['u_first_name'] .' '. $user['u_last_name'] ?>">
     <?php 
         if(isset($_GET['ro_id']) && isset($_GET['select_seat']) && isset($_GET['price']) && isset($_GET['bus_id'])){
 
@@ -287,7 +287,7 @@ if(isset($_GET["clean_seant"])){
                                             
                                     <div style="overflow-x: auto;">
                                     <table class="table text-center" >
-                                        <thead style="background-color: #4B4A67; color: white;">
+                                        <thead style="background-color: #52BE80; color: white;">
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">ต้นทาง</th>
